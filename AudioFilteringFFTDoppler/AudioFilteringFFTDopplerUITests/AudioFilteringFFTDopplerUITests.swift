@@ -1,13 +1,13 @@
 //
-//  audio_filtering_fft_dopplerUITests.swift
-//  audio-filtering-fft-dopplerUITests
+//  AudioFilteringFFTDopplerUITests.swift
+//  AudioFilteringFFTDopplerUITests
 //
 //  Created by Nicholas Larsen on 9/22/21.
 //
 
 import XCTest
 
-class audio_filtering_fft_dopplerUITests: XCTestCase {
+class AudioFilteringFFTDopplerUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

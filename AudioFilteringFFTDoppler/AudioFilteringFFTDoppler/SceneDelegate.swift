@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  audio-filtering-fft-doppler
+//  AudioFilteringFFTDoppler
 //
 //  Created by Nicholas Larsen on 9/22/21.
 //
