@@ -15,14 +15,51 @@
                     <view key="view" contentMode="scaleToFill" id="iP1-7l-ixc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dsv-Q8-4IX">
+                                <rect key="frame" x="0.0" y="101" width="421" height="537.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Towards!!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MkH-cZ-IgD">
+                                <rect key="frame" x="146.5" y="646" width="121" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#HZ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T8D-mA-JQS">
+                                <rect key="frame" x="190" y="696" width="34" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="DYU-Zn-42H">
+                                <rect key="frame" x="-2" y="732" width="418" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="mEH-OG-HNA"/>
+                                </constraints>
+                            </slider>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="68U-NE-sMS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="DYU-Zn-42H" firstAttribute="top" secondItem="T8D-mA-JQS" secondAttribute="bottom" constant="15" id="1Rd-ho-DjU"/>
+                            <constraint firstItem="MkH-cZ-IgD" firstAttribute="top" secondItem="Dsv-Q8-4IX" secondAttribute="bottom" constant="7.5" id="4Dc-LY-fN6"/>
+                            <constraint firstItem="Dsv-Q8-4IX" firstAttribute="height" secondItem="iP1-7l-ixc" secondAttribute="height" multiplier="0.6" id="HSy-AV-sXV"/>
+                            <constraint firstItem="DYU-Zn-42H" firstAttribute="width" secondItem="iP1-7l-ixc" secondAttribute="width" id="P0v-8g-36M"/>
+                            <constraint firstItem="Dsv-Q8-4IX" firstAttribute="width" secondItem="iP1-7l-ixc" secondAttribute="width" multiplier="1.01691" id="Qgr-yq-mih"/>
+                            <constraint firstItem="T8D-mA-JQS" firstAttribute="centerX" secondItem="68U-NE-sMS" secondAttribute="centerX" id="Rrm-1P-rcO"/>
+                            <constraint firstItem="Dsv-Q8-4IX" firstAttribute="top" secondItem="68U-NE-sMS" secondAttribute="top" constant="13" id="X3L-Ww-QxU"/>
+                            <constraint firstItem="DYU-Zn-42H" firstAttribute="centerX" secondItem="68U-NE-sMS" secondAttribute="centerX" id="Zvd-8u-1BC"/>
+                            <constraint firstItem="MkH-cZ-IgD" firstAttribute="centerX" secondItem="68U-NE-sMS" secondAttribute="centerX" id="aLr-41-CWT"/>
+                            <constraint firstItem="Dsv-Q8-4IX" firstAttribute="centerX" secondItem="68U-NE-sMS" secondAttribute="centerX" constant="3.5" id="gxF-VT-bdD"/>
+                            <constraint firstItem="T8D-mA-JQS" firstAttribute="top" secondItem="MkH-cZ-IgD" secondAttribute="bottom" constant="15" id="zhj-za-m69"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Eda-NQ-KDU"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uNt-Q3-jgt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-113" y="545"/>
+            <point key="canvasLocation" x="-113.04347826086958" y="543.75"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="O0s-ib-GOf">
