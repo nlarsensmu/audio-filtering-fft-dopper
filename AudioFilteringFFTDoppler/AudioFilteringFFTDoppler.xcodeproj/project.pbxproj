@@ -15,6 +15,8 @@
 		FDFC147A26FBF7E30039CE1C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDFC147826FBF7E30039CE1C /* LaunchScreen.storyboard */; };
 		FDFC148526FBF7E30039CE1C /* AudioFilteringFFTDopplerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC148426FBF7E30039CE1C /* AudioFilteringFFTDopplerTests.swift */; };
 		FDFC149026FBF7E30039CE1C /* AudioFilteringFFTDopplerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC148F26FBF7E30039CE1C /* AudioFilteringFFTDopplerUITests.swift */; };
+		FDFC149E26FC05570039CE1C /* Module1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC149D26FC05570039CE1C /* Module1ViewController.swift */; };
+		FDFC14A026FC05810039CE1C /* Module2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC149F26FC05810039CE1C /* Module2ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		FDFC148B26FBF7E30039CE1C /* AudioFilteringFFTDopplerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioFilteringFFTDopplerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFC148F26FBF7E30039CE1C /* AudioFilteringFFTDopplerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilteringFFTDopplerUITests.swift; sourceTree = "<group>"; };
 		FDFC149126FBF7E30039CE1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDFC149D26FC05570039CE1C /* Module1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module1ViewController.swift; sourceTree = "<group>"; };
+		FDFC149F26FC05810039CE1C /* Module2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module2ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				FDFC147626FBF7E30039CE1C /* Assets.xcassets */,
 				FDFC147826FBF7E30039CE1C /* LaunchScreen.storyboard */,
 				FDFC147B26FBF7E30039CE1C /* Info.plist */,
+				FDFC149D26FC05570039CE1C /* Module1ViewController.swift */,
+				FDFC149F26FC05810039CE1C /* Module2ViewController.swift */,
 			);
 			path = AudioFilteringFFTDoppler;
 			sourceTree = "<group>";
@@ -258,6 +264,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDFC149E26FC05570039CE1C /* Module1ViewController.swift in Sources */,
+				FDFC14A026FC05810039CE1C /* Module2ViewController.swift in Sources */,
 				FDFC147226FBF7E20039CE1C /* ViewController.swift in Sources */,
 				FDFC146E26FBF7E20039CE1C /* AppDelegate.swift in Sources */,
 				FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */,

@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Module2 View Controller-->
         <scene sceneID="5sf-Bc-f7C">
             <objects>
-                <viewController id="AAK-UI-dKz" sceneMemberID="viewController">
+                <viewController id="AAK-UI-dKz" customClass="Module2ViewController" customModule="AudioFilteringFFTDoppler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iP1-7l-ixc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,6 +56,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Eda-NQ-KDU"/>
+                    <connections>
+                        <outlet property="graphview" destination="Dsv-Q8-4IX" id="pla-gp-Jmo"/>
+                        <outlet property="handResultLabel" destination="T8D-mA-JQS" id="NK6-HR-e5s"/>
+                        <outlet property="hsSlider" destination="DYU-Zn-42H" id="UrZ-6h-yDa"/>
+                        <outlet property="hzLabel" destination="T8D-mA-JQS" id="iqG-PB-TSh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uNt-Q3-jgt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -142,10 +148,10 @@
             </objects>
             <point key="canvasLocation" x="-1920" y="55"/>
         </scene>
-        <!--View Controller-->
+        <!--Module1 View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AudioFilteringFFTDoppler" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="Module1ViewController" customModule="AudioFilteringFFTDoppler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -200,6 +206,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aGI-MW-s7j"/>
+                    <connections>
+                        <outlet property="graphView" destination="NwJ-0s-5af" id="UE9-fy-ERE"/>
+                        <outlet property="hz1" destination="poz-K3-lzr" id="H9U-8l-SAf"/>
+                        <outlet property="hz2" destination="BM7-hD-E1m" id="QOP-Z7-cv2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
