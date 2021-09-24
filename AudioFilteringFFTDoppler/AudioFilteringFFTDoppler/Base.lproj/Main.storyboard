@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Module2 View Controller-->
         <scene sceneID="5sf-Bc-f7C">
             <objects>
-                <viewController id="AAK-UI-dKz" sceneMemberID="viewController">
+                <viewController id="AAK-UI-dKz" customClass="Module2ViewController" customModule="AudioFilteringFFTDoppler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iP1-7l-ixc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,30 +32,39 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="DYU-Zn-42H">
-                                <rect key="frame" x="-2" y="732" width="418" height="30"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Jq1-44-xJx">
+                                <rect key="frame" x="18" y="725" width="378" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="29" id="mEH-OG-HNA"/>
+                                    <constraint firstAttribute="height" constant="29" id="a9r-ZO-GrH"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="sliderAction:" destination="AAK-UI-dKz" eventType="valueChanged" id="cJm-dZ-pXa"/>
+                                </connections>
                             </slider>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="68U-NE-sMS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="DYU-Zn-42H" firstAttribute="top" secondItem="T8D-mA-JQS" secondAttribute="bottom" constant="15" id="1Rd-ho-DjU"/>
                             <constraint firstItem="MkH-cZ-IgD" firstAttribute="top" secondItem="Dsv-Q8-4IX" secondAttribute="bottom" constant="7.5" id="4Dc-LY-fN6"/>
+                            <constraint firstItem="Jq1-44-xJx" firstAttribute="width" secondItem="iP1-7l-ixc" secondAttribute="width" multiplier="0.903382" id="6ZW-Zw-zb4"/>
+                            <constraint firstItem="Jq1-44-xJx" firstAttribute="centerX" secondItem="68U-NE-sMS" secondAttribute="centerX" id="7a2-YL-DqE"/>
+                            <constraint firstItem="Jq1-44-xJx" firstAttribute="top" secondItem="T8D-mA-JQS" secondAttribute="bottom" constant="8" symbolic="YES" id="8lw-Yl-Zuz"/>
                             <constraint firstItem="Dsv-Q8-4IX" firstAttribute="height" secondItem="iP1-7l-ixc" secondAttribute="height" multiplier="0.6" id="HSy-AV-sXV"/>
-                            <constraint firstItem="DYU-Zn-42H" firstAttribute="width" secondItem="iP1-7l-ixc" secondAttribute="width" id="P0v-8g-36M"/>
                             <constraint firstItem="Dsv-Q8-4IX" firstAttribute="width" secondItem="iP1-7l-ixc" secondAttribute="width" multiplier="1.01691" id="Qgr-yq-mih"/>
                             <constraint firstItem="T8D-mA-JQS" firstAttribute="centerX" secondItem="68U-NE-sMS" secondAttribute="centerX" id="Rrm-1P-rcO"/>
                             <constraint firstItem="Dsv-Q8-4IX" firstAttribute="top" secondItem="68U-NE-sMS" secondAttribute="top" constant="13" id="X3L-Ww-QxU"/>
-                            <constraint firstItem="DYU-Zn-42H" firstAttribute="centerX" secondItem="68U-NE-sMS" secondAttribute="centerX" id="Zvd-8u-1BC"/>
                             <constraint firstItem="MkH-cZ-IgD" firstAttribute="centerX" secondItem="68U-NE-sMS" secondAttribute="centerX" id="aLr-41-CWT"/>
                             <constraint firstItem="Dsv-Q8-4IX" firstAttribute="centerX" secondItem="68U-NE-sMS" secondAttribute="centerX" constant="3.5" id="gxF-VT-bdD"/>
                             <constraint firstItem="T8D-mA-JQS" firstAttribute="top" secondItem="MkH-cZ-IgD" secondAttribute="bottom" constant="15" id="zhj-za-m69"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Eda-NQ-KDU"/>
+                    <connections>
+                        <outlet property="graphView" destination="Dsv-Q8-4IX" id="8Br-Zx-Esg"/>
+                        <outlet property="hzLabel" destination="T8D-mA-JQS" id="Mlf-d3-D9q"/>
+                        <outlet property="hzSlider" destination="Jq1-44-xJx" id="837-oU-MNt"/>
+                        <outlet property="resultLabel" destination="MkH-cZ-IgD" id="wJK-4Y-mCM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uNt-Q3-jgt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -142,10 +151,10 @@
             </objects>
             <point key="canvasLocation" x="-1920" y="55"/>
         </scene>
-        <!--View Controller-->
+        <!--Module1 View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AudioFilteringFFTDoppler" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="Module1ViewController" customModule="AudioFilteringFFTDoppler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -200,6 +209,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aGI-MW-s7j"/>
+                    <connections>
+                        <outlet property="graphView" destination="NwJ-0s-5af" id="UE9-fy-ERE"/>
+                        <outlet property="hz1" destination="poz-K3-lzr" id="H9U-8l-SAf"/>
+                        <outlet property="hz2" destination="BM7-hD-E1m" id="QOP-Z7-cv2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
