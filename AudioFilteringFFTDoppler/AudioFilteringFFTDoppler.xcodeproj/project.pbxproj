@@ -9,10 +9,9 @@
 /* Begin PBXBuildFile section */
 		B7FFC5E926FE86B100606636 /* AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5E826FE86B100606636 /* AudioModel.swift */; };
 		B7FFC5ED26FE8A1500606636 /* Novocaine.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5EC26FE8A1500606636 /* Novocaine.m */; };
-		B7FFC5F026FE8A3400606636 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5EF26FE8A3400606636 /* CircularBuffer.m */; };
 		B7FFC5F326FE8A4900606636 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5F226FE8A4900606636 /* CircularBuffer.m */; };
-		B7FFC5F626FE8A5000606636 /* AudioFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5F426FE8A5000606636 /* AudioFileReader.m */; };
 		B7FFC5F926FE8A6D00606636 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5F826FE8A6D00606636 /* FFTHelper.m */; };
+		FD20817326FE94C50067C1F4 /* AudioFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20817126FE94C50067C1F4 /* AudioFileReader.m */; };
 		FDFC146E26FBF7E20039CE1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */; };
 		FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */; };
 		FDFC147226FBF7E20039CE1C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC147126FBF7E20039CE1C /* ViewController.swift */; };
@@ -45,16 +44,16 @@
 /* Begin PBXFileReference section */
 		B7FFC5E826FE86B100606636 /* AudioModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioModel.swift; path = ../../../AudioLabSwift/AudioLabSwift/AudioModel.swift; sourceTree = "<group>"; };
 		B7FFC5EA26FE8A0900606636 /* Novocaine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Novocaine.h; path = ../../../AudioLabSwift/AudioDSPUtils/Novocaine.h; sourceTree = "<group>"; };
-		B7FFC5EB26FE8A1400606636 /* AudioFilteringFFTDoppler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioFilteringFFTDoppler-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7FFC5EC26FE8A1500606636 /* Novocaine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Novocaine.m; path = ../../../AudioLabSwift/AudioDSPUtils/Novocaine.m; sourceTree = "<group>"; };
 		B7FFC5EE26FE8A3400606636 /* CircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircularBuffer.h; path = ../../../AudioLabSwift/AudioDSPUtils/CircularBuffer.h; sourceTree = "<group>"; };
 		B7FFC5EF26FE8A3400606636 /* CircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircularBuffer.m; path = ../../../AudioLabSwift/AudioDSPUtils/CircularBuffer.m; sourceTree = "<group>"; };
 		B7FFC5F126FE8A4900606636 /* CircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircularBuffer.h; path = ../../../AudioLabSwift/AudioDSPUtils/CircularBuffer.h; sourceTree = "<group>"; };
 		B7FFC5F226FE8A4900606636 /* CircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircularBuffer.m; path = ../../../AudioLabSwift/AudioDSPUtils/CircularBuffer.m; sourceTree = "<group>"; };
-		B7FFC5F426FE8A5000606636 /* AudioFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioFileReader.m; path = ../../../AudioLabSwift/AudioDSPUtils/AudioFileReader.m; sourceTree = "<group>"; };
-		B7FFC5F526FE8A5000606636 /* AudioFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFileReader.h; path = ../../../AudioLabSwift/AudioDSPUtils/AudioFileReader.h; sourceTree = "<group>"; };
 		B7FFC5F726FE8A6D00606636 /* FFTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFTHelper.h; path = ../../../AudioLabSwift/AudioDSPUtils/FFTHelper.h; sourceTree = "<group>"; };
 		B7FFC5F826FE8A6D00606636 /* FFTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTHelper.m; path = ../../../AudioLabSwift/AudioDSPUtils/FFTHelper.m; sourceTree = "<group>"; };
+		FD20817026FE946A0067C1F4 /* AudioFilteringFFTDoppler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioFilteringFFTDoppler-Bridging-Header.h"; sourceTree = "<group>"; };
+		FD20817126FE94C50067C1F4 /* AudioFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioFileReader.m; path = ../../../AudioLabSwift/AudioDSPUtils/AudioFileReader.m; sourceTree = "<group>"; };
+		FD20817226FE94C50067C1F4 /* AudioFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFileReader.h; path = ../../../AudioLabSwift/AudioDSPUtils/AudioFileReader.h; sourceTree = "<group>"; };
 		FDFC146A26FBF7E20039CE1C /* AudioFilteringFFTDoppler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFilteringFFTDoppler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,10 +126,10 @@
 				B7FFC5EC26FE8A1500606636 /* Novocaine.m */,
 				B7FFC5F126FE8A4900606636 /* CircularBuffer.h */,
 				B7FFC5F226FE8A4900606636 /* CircularBuffer.m */,
-				B7FFC5F526FE8A5000606636 /* AudioFileReader.h */,
-				B7FFC5F426FE8A5000606636 /* AudioFileReader.m */,
 				B7FFC5F726FE8A6D00606636 /* FFTHelper.h */,
 				B7FFC5F826FE8A6D00606636 /* FFTHelper.m */,
+				FD20817226FE94C50067C1F4 /* AudioFileReader.h */,
+				FD20817126FE94C50067C1F4 /* AudioFileReader.m */,
 				B7FFC5E826FE86B100606636 /* AudioModel.swift */,
 				FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */,
 				FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */,
@@ -139,6 +138,7 @@
 				FDFC147626FBF7E30039CE1C /* Assets.xcassets */,
 				FDFC147826FBF7E30039CE1C /* LaunchScreen.storyboard */,
 				FDFC147B26FBF7E30039CE1C /* Info.plist */,
+				FD20817026FE946A0067C1F4 /* AudioFilteringFFTDoppler-Bridging-Header.h */,
 				FDFC149D26FC05570039CE1C /* Module1ViewController.swift */,
 				FDFC149F26FC05810039CE1C /* Module2ViewController.swift */,
 			);
@@ -299,6 +299,7 @@
 				FDFC147226FBF7E20039CE1C /* ViewController.swift in Sources */,
 				B7FFC5F326FE8A4900606636 /* CircularBuffer.m in Sources */,
 				FDFC146E26FBF7E20039CE1C /* AppDelegate.swift in Sources */,
+				FD20817326FE94C50067C1F4 /* AudioFileReader.m in Sources */,
 				B7FFC5F926FE8A6D00606636 /* FFTHelper.m in Sources */,
 				B7FFC5E926FE86B100606636 /* AudioModel.swift in Sources */,
 				FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */,
@@ -480,13 +481,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XGS97V26UJ;
+				DEVELOPMENT_TEAM = H6Q8KU2898;
 				INFOPLIST_FILE = AudioFilteringFFTDoppler/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = SMU.AudioFilteringFFTDoppler;
+				PRODUCT_BUNDLE_IDENTIFIER = SMU.AudioFilteringFFTDoppler.nick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AudioFilteringFFTDoppler/AudioFilteringFFTDoppler-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -502,13 +503,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XGS97V26UJ;
+				DEVELOPMENT_TEAM = H6Q8KU2898;
 				INFOPLIST_FILE = AudioFilteringFFTDoppler/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = SMU.AudioFilteringFFTDoppler;
+				PRODUCT_BUNDLE_IDENTIFIER = SMU.AudioFilteringFFTDoppler.nick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "AudioFilteringFFTDoppler/AudioFilteringFFTDoppler-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
