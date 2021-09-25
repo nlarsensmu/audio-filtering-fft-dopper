@@ -39,12 +39,16 @@ class Module2ViewController: UIViewController {
             self.hzSlider.minimumValue = Float(AudioConstants.MIN_FREQ)
             self.hzSlider.maximumValue = Float(AudioConstants.MAX_FREQ)
             self.hzSlider.value = AudioConstants.MIN_FREQ
-            self.hzLabel.text = String(format: "%.2lf Hz", AudioConstants.MIN_FREQ)
+            self.hzLabel.text = self.hzString(hz: self.freq)
         }
         
         graph?.addGraph(withName: "fft",
                         shouldNormalize: true,
                         numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
+        
+        audioModel.startMicrophoneProcessing(withFps: 10.0)
+        audioModel.play()
+        
         
         Timer.scheduledTimer(timeInterval: 0.05, target: self,
             selector: #selector(self.updateGraph),
@@ -52,11 +56,6 @@ class Module2ViewController: UIViewController {
             repeats: true)
         // Do any additional setup after loading the view.
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        audioModel.pause()
-    }
-    
     
     @objc
     func updateGraph(){
@@ -65,6 +64,12 @@ class Module2ViewController: UIViewController {
             forKey: "fft"
        )
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        audioModel.pause()
+    }
+    
     
     @IBAction func sliderAction(_ sender: Any) {
         DispatchQueue.main.async {
