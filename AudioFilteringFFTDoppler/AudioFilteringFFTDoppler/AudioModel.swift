@@ -222,6 +222,10 @@ class AudioModel {
     func getTopIndices(indices:[Int], nums:[Float]) -> [Int]{
         var maxIndex1 = indices[0]
         var maxIndex2 = indices[0]
+        var returnIndices = [Int].init(repeating: 0, count: 2)
+        if indices.count == 1{
+            return returnIndices
+        }
         if nums[indices[1]] > nums[maxIndex1] {
             maxIndex1 = indices[1]
         }
@@ -239,7 +243,6 @@ class AudioModel {
                 maxIndex2 = indices[i]
             }
         }
-        var returnIndices = [Int].init(repeating: 0, count: 2)
         returnIndices[0] = maxIndex1
         returnIndices[1] = maxIndex2
         
