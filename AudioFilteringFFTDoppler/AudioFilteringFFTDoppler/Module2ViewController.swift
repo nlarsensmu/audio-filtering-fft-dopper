@@ -19,7 +19,7 @@ class Module2ViewController: UIViewController {
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 1024*4
         static let MIN_FREQ:Float = 10.0
-        static let MAX_FREQ:Float = 10.0
+        static let MAX_FREQ:Float = 15.0
     }
     var freq:Float = AudioConstants.MIN_FREQ{
         didSet {
@@ -46,6 +46,11 @@ class Module2ViewController: UIViewController {
                         shouldNormalize: true,
                         numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
         
+        Timer.scheduledTimer(timeInterval: 0.05, target: self,
+            selector: #selector(self.updateGraph),
+            userInfo: nil,
+            repeats: true)
+        
         
 
         // Do any additional setup after loading the view.
@@ -57,7 +62,7 @@ class Module2ViewController: UIViewController {
     
     @IBAction func sliderAction(_ sender: Any) {
         DispatchQueue.main.async {
-            self.hzLabel.text = String(format: "%.2lf Hz", self.hzSlider.value)
+            self.hzLabel.text = self.hzString(hz: self.freq)
         }
     }
     
