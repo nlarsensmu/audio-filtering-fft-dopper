@@ -32,7 +32,7 @@ class Module1ViewController: UIViewController {
                         numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE/2)
 
         audio.startMicrophoneProcessing(withFps: 10.0)
-        //audio.play()
+        audio.play()
         
         Timer.scheduledTimer(timeInterval: 0.05, target: self,
             selector: #selector(self.updateGraph),
@@ -42,7 +42,15 @@ class Module1ViewController: UIViewController {
     
     @objc
     func updateGraph(){
-        print(audio.fftData)
+        let indicies = audio.windowedMaxFor(nums: audio.fftData, windowSize: 10)
+        let peaks = audio.getTopIndices(indices: indicies, nums: audio.fftData)
+        DispatchQueue.main.async {
+            if let peak1:Int = peaks[0] as Int?,
+               let peak2:Int = peaks[1] as Int?{
+                self.hz1.text = String(peak1)
+                self.hz2.text = String(peak2)
+            }
+        }
         self.graph?.updateGraph(
             data: self.audio.fftData,
             forKey: "fft"

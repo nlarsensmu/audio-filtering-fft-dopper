@@ -14,6 +14,8 @@
 		B72B575726FEA97300A5B3EE /* DataBufferBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B574C26FEA97300A5B3EE /* DataBufferBlock.m */; };
 		B72B575826FEA97300A5B3EE /* BufferedOverlapQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B574E26FEA97300A5B3EE /* BufferedOverlapQueue.m */; };
 		B72B575926FEA97300A5B3EE /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B575026FEA97300A5B3EE /* FFTHelper.m */; };
+		B7DD52BD26FEACB6005521F6 /* MetalGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD52BC26FEACB6005521F6 /* MetalGraph.swift */; };
+		B7DD52BF26FEAD6A005521F6 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B7DD52BE26FEAD6A005521F6 /* Shaders.metal */; };
 		B7FFC60626FEA5ED00606636 /* AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC60526FEA5ED00606636 /* AudioModel.swift */; };
 		FDFC146E26FBF7E20039CE1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */; };
 		FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */; };
@@ -59,6 +61,8 @@
 		B72B574E26FEA97300A5B3EE /* BufferedOverlapQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BufferedOverlapQueue.m; path = AudioDSPUtils/BufferedOverlapQueue.m; sourceTree = SOURCE_ROOT; };
 		B72B574F26FEA97300A5B3EE /* CircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircularBuffer.h; path = AudioDSPUtils/CircularBuffer.h; sourceTree = SOURCE_ROOT; };
 		B72B575026FEA97300A5B3EE /* FFTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTHelper.m; path = AudioDSPUtils/FFTHelper.m; sourceTree = SOURCE_ROOT; };
+		B7DD52BC26FEACB6005521F6 /* MetalGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalGraph.swift; sourceTree = "<group>"; };
+		B7DD52BE26FEAD6A005521F6 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		B7FFC60526FEA5ED00606636 /* AudioModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioModel.swift; sourceTree = "<group>"; };
 		FD20817026FE946A0067C1F4 /* AudioFilteringFFTDoppler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioFilteringFFTDoppler-Bridging-Header.h"; sourceTree = "<group>"; };
 		FDFC146A26FBF7E20039CE1C /* AudioFilteringFFTDoppler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFilteringFFTDoppler.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +111,7 @@
 		FDFC146126FBF7E20039CE1C = {
 			isa = PBXGroup;
 			children = (
+				B7DD52BE26FEAD6A005521F6 /* Shaders.metal */,
 				FDFC146C26FBF7E20039CE1C /* AudioFilteringFFTDoppler */,
 				FDFC148326FBF7E30039CE1C /* AudioFilteringFFTDopplerTests */,
 				FDFC148E26FBF7E30039CE1C /* AudioFilteringFFTDopplerUITests */,
@@ -127,6 +132,7 @@
 		FDFC146C26FBF7E20039CE1C /* AudioFilteringFFTDoppler */ = {
 			isa = PBXGroup;
 			children = (
+				B7DD52BC26FEACB6005521F6 /* MetalGraph.swift */,
 				B72B574626FEA97200A5B3EE /* AudioFileReader.h */,
 				B72B574726FEA97200A5B3EE /* AudioFileReader.m */,
 				B72B574D26FEA97300A5B3EE /* BufferedOverlapQueue.h */,
@@ -307,12 +313,14 @@
 			files = (
 				FDFC149E26FC05570039CE1C /* Module1ViewController.swift in Sources */,
 				FDFC14A026FC05810039CE1C /* Module2ViewController.swift in Sources */,
+				B7DD52BD26FEACB6005521F6 /* MetalGraph.swift in Sources */,
 				FDFC147226FBF7E20039CE1C /* ViewController.swift in Sources */,
 				B7FFC60626FEA5ED00606636 /* AudioModel.swift in Sources */,
 				FDFC146E26FBF7E20039CE1C /* AppDelegate.swift in Sources */,
 				B72B575726FEA97300A5B3EE /* DataBufferBlock.m in Sources */,
 				B72B575426FEA97300A5B3EE /* AudioFileReader.m in Sources */,
 				FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */,
+				B7DD52BF26FEAD6A005521F6 /* Shaders.metal in Sources */,
 				B72B575926FEA97300A5B3EE /* FFTHelper.m in Sources */,
 				B72B575826FEA97300A5B3EE /* BufferedOverlapQueue.m in Sources */,
 				B72B575626FEA97300A5B3EE /* Novocaine.m in Sources */,
