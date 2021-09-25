@@ -17,6 +17,7 @@
 		B7DD52BD26FEACB6005521F6 /* MetalGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DD52BC26FEACB6005521F6 /* MetalGraph.swift */; };
 		B7DD52BF26FEAD6A005521F6 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B7DD52BE26FEAD6A005521F6 /* Shaders.metal */; };
 		B7FFC60626FEA5ED00606636 /* AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC60526FEA5ED00606636 /* AudioModel.swift */; };
+		FDA357F426FECAFC002F95CA /* HandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA357F326FECAFC002F95CA /* HandViewController.swift */; };
 		FDFC146E26FBF7E20039CE1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */; };
 		FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */; };
 		FDFC147226FBF7E20039CE1C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC147126FBF7E20039CE1C /* ViewController.swift */; };
@@ -65,6 +66,7 @@
 		B7DD52BE26FEAD6A005521F6 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		B7FFC60526FEA5ED00606636 /* AudioModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioModel.swift; sourceTree = "<group>"; };
 		FD20817026FE946A0067C1F4 /* AudioFilteringFFTDoppler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioFilteringFFTDoppler-Bridging-Header.h"; sourceTree = "<group>"; };
+		FDA357F326FECAFC002F95CA /* HandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandViewController.swift; sourceTree = "<group>"; };
 		FDFC146A26FBF7E20039CE1C /* AudioFilteringFFTDoppler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFilteringFFTDoppler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				FD20817026FE946A0067C1F4 /* AudioFilteringFFTDoppler-Bridging-Header.h */,
 				FDFC149D26FC05570039CE1C /* Module1ViewController.swift */,
 				FDFC149F26FC05810039CE1C /* Module2ViewController.swift */,
+				FDA357F326FECAFC002F95CA /* HandViewController.swift */,
 			);
 			path = AudioFilteringFFTDoppler;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				B72B575926FEA97300A5B3EE /* FFTHelper.m in Sources */,
 				B72B575826FEA97300A5B3EE /* BufferedOverlapQueue.m in Sources */,
 				B72B575626FEA97300A5B3EE /* Novocaine.m in Sources */,
+				FDA357F426FECAFC002F95CA /* HandViewController.swift in Sources */,
 				B72B575326FEA97300A5B3EE /* CubicSpline.m in Sources */,
 				B72B575526FEA97300A5B3EE /* CircularBuffer.m in Sources */,
 			);
