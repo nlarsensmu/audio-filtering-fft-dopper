@@ -32,7 +32,7 @@
 // Device switching should work, check with laptop. Read that damn book.
 // Wrap logging with debug macros.
 // Think about what should be public, what private.
-// Ability to select non-default devices.
+// Ability to select non-default devices.	
 
 
 #import "Novocaine.h"

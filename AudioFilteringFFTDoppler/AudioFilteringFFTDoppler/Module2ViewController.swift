@@ -50,14 +50,20 @@ class Module2ViewController: UIViewController {
             selector: #selector(self.updateGraph),
             userInfo: nil,
             repeats: true)
-        
-        
-
         // Do any additional setup after loading the view.
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         audioModel.pause()
+    }
+    
+    
+    @objc
+    func updateGraph(){
+        self.graph?.updateGraph(
+            data: self.audioModel.fftData,
+            forKey: "fft"
+       )
     }
     
     @IBAction func sliderAction(_ sender: Any) {
