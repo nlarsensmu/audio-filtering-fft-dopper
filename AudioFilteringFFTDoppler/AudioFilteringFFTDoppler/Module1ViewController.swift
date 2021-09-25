@@ -26,12 +26,13 @@ class Module1ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         graph?.addGraph(withName: "fft",
                         shouldNormalize: true,
                         numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE/2)
 
         audio.startMicrophoneProcessing(withFps: 10.0)
-        
+        //audio.play()
         
         Timer.scheduledTimer(timeInterval: 0.05, target: self,
             selector: #selector(self.updateGraph),
@@ -41,6 +42,7 @@ class Module1ViewController: UIViewController {
     
     @objc
     func updateGraph(){
+        print(audio.fftData)
         self.graph?.updateGraph(
             data: self.audio.fftData,
             forKey: "fft"
