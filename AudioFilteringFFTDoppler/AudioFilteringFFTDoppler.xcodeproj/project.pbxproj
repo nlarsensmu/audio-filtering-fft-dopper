@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B7FFC5E926FE86B100606636 /* AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5E826FE86B100606636 /* AudioModel.swift */; };
-		B7FFC5ED26FE8A1500606636 /* Novocaine.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5EC26FE8A1500606636 /* Novocaine.m */; };
-		B7FFC5F326FE8A4900606636 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5F226FE8A4900606636 /* CircularBuffer.m */; };
-		B7FFC5F926FE8A6D00606636 /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC5F826FE8A6D00606636 /* FFTHelper.m */; };
-		B7FFC60426FE9B8000606636 /* MetalGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC60326FE9B8000606636 /* MetalGraph.swift */; };
-		FD20817326FE94C50067C1F4 /* AudioFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = FD20817126FE94C50067C1F4 /* AudioFileReader.m */; };
+		B72B575326FEA97300A5B3EE /* CubicSpline.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B574526FEA97200A5B3EE /* CubicSpline.m */; };
+		B72B575426FEA97300A5B3EE /* AudioFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B574726FEA97200A5B3EE /* AudioFileReader.m */; };
+		B72B575526FEA97300A5B3EE /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B574826FEA97200A5B3EE /* CircularBuffer.m */; };
+		B72B575626FEA97300A5B3EE /* Novocaine.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B574926FEA97300A5B3EE /* Novocaine.m */; };
+		B72B575726FEA97300A5B3EE /* DataBufferBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B574C26FEA97300A5B3EE /* DataBufferBlock.m */; };
+		B72B575826FEA97300A5B3EE /* BufferedOverlapQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B574E26FEA97300A5B3EE /* BufferedOverlapQueue.m */; };
+		B72B575926FEA97300A5B3EE /* FFTHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B72B575026FEA97300A5B3EE /* FFTHelper.m */; };
+		B7FFC60626FEA5ED00606636 /* AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC60526FEA5ED00606636 /* AudioModel.swift */; };
 		FDFC146E26FBF7E20039CE1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */; };
 		FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */; };
 		FDFC147226FBF7E20039CE1C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC147126FBF7E20039CE1C /* ViewController.swift */; };
@@ -43,19 +45,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B7FFC5E826FE86B100606636 /* AudioModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioModel.swift; path = ../../../AudioLabSwift/AudioLabSwift/AudioModel.swift; sourceTree = "<group>"; };
-		B7FFC5EA26FE8A0900606636 /* Novocaine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Novocaine.h; path = ../../../AudioLabSwift/AudioDSPUtils/Novocaine.h; sourceTree = "<group>"; };
-		B7FFC5EC26FE8A1500606636 /* Novocaine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Novocaine.m; path = ../../../AudioLabSwift/AudioDSPUtils/Novocaine.m; sourceTree = "<group>"; };
-		B7FFC5EE26FE8A3400606636 /* CircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircularBuffer.h; path = ../../../AudioLabSwift/AudioDSPUtils/CircularBuffer.h; sourceTree = "<group>"; };
-		B7FFC5EF26FE8A3400606636 /* CircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircularBuffer.m; path = ../../../AudioLabSwift/AudioDSPUtils/CircularBuffer.m; sourceTree = "<group>"; };
-		B7FFC5F126FE8A4900606636 /* CircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircularBuffer.h; path = ../../../AudioLabSwift/AudioDSPUtils/CircularBuffer.h; sourceTree = "<group>"; };
-		B7FFC5F226FE8A4900606636 /* CircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircularBuffer.m; path = ../../../AudioLabSwift/AudioDSPUtils/CircularBuffer.m; sourceTree = "<group>"; };
-		B7FFC5F726FE8A6D00606636 /* FFTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFTHelper.h; path = ../../../AudioLabSwift/AudioDSPUtils/FFTHelper.h; sourceTree = "<group>"; };
-		B7FFC5F826FE8A6D00606636 /* FFTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTHelper.m; path = ../../../AudioLabSwift/AudioDSPUtils/FFTHelper.m; sourceTree = "<group>"; };
-		B7FFC60326FE9B8000606636 /* MetalGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetalGraph.swift; path = ../../../AudioLabSwift/AudioLabSwift/MetalGraph.swift; sourceTree = "<group>"; };
+		B72B574026FEA97200A5B3EE /* CubicSpline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CubicSpline.h; path = AudioDSPUtils/CubicSpline.h; sourceTree = SOURCE_ROOT; };
+		B72B574126FEA97200A5B3EE /* FFTHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFTHelper.h; path = AudioDSPUtils/FFTHelper.h; sourceTree = SOURCE_ROOT; };
+		B72B574326FEA97200A5B3EE /* Novocaine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Novocaine.h; path = AudioDSPUtils/Novocaine.h; sourceTree = SOURCE_ROOT; };
+		B72B574526FEA97200A5B3EE /* CubicSpline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CubicSpline.m; path = AudioDSPUtils/CubicSpline.m; sourceTree = SOURCE_ROOT; };
+		B72B574626FEA97200A5B3EE /* AudioFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFileReader.h; path = AudioDSPUtils/AudioFileReader.h; sourceTree = SOURCE_ROOT; };
+		B72B574726FEA97200A5B3EE /* AudioFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioFileReader.m; path = AudioDSPUtils/AudioFileReader.m; sourceTree = SOURCE_ROOT; };
+		B72B574826FEA97200A5B3EE /* CircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircularBuffer.m; path = AudioDSPUtils/CircularBuffer.m; sourceTree = SOURCE_ROOT; };
+		B72B574926FEA97300A5B3EE /* Novocaine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Novocaine.m; path = AudioDSPUtils/Novocaine.m; sourceTree = SOURCE_ROOT; };
+		B72B574A26FEA97300A5B3EE /* DataBufferBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataBufferBlock.h; path = AudioDSPUtils/DataBufferBlock.h; sourceTree = SOURCE_ROOT; };
+		B72B574C26FEA97300A5B3EE /* DataBufferBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataBufferBlock.m; path = AudioDSPUtils/DataBufferBlock.m; sourceTree = SOURCE_ROOT; };
+		B72B574D26FEA97300A5B3EE /* BufferedOverlapQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedOverlapQueue.h; path = AudioDSPUtils/BufferedOverlapQueue.h; sourceTree = SOURCE_ROOT; };
+		B72B574E26FEA97300A5B3EE /* BufferedOverlapQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BufferedOverlapQueue.m; path = AudioDSPUtils/BufferedOverlapQueue.m; sourceTree = SOURCE_ROOT; };
+		B72B574F26FEA97300A5B3EE /* CircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircularBuffer.h; path = AudioDSPUtils/CircularBuffer.h; sourceTree = SOURCE_ROOT; };
+		B72B575026FEA97300A5B3EE /* FFTHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFTHelper.m; path = AudioDSPUtils/FFTHelper.m; sourceTree = SOURCE_ROOT; };
+		B7FFC60526FEA5ED00606636 /* AudioModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioModel.swift; sourceTree = "<group>"; };
 		FD20817026FE946A0067C1F4 /* AudioFilteringFFTDoppler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioFilteringFFTDoppler-Bridging-Header.h"; sourceTree = "<group>"; };
-		FD20817126FE94C50067C1F4 /* AudioFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioFileReader.m; path = ../../../AudioLabSwift/AudioDSPUtils/AudioFileReader.m; sourceTree = "<group>"; };
-		FD20817226FE94C50067C1F4 /* AudioFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioFileReader.h; path = ../../../AudioLabSwift/AudioDSPUtils/AudioFileReader.h; sourceTree = "<group>"; };
 		FDFC146A26FBF7E20039CE1C /* AudioFilteringFFTDoppler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFilteringFFTDoppler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -122,18 +127,21 @@
 		FDFC146C26FBF7E20039CE1C /* AudioFilteringFFTDoppler */ = {
 			isa = PBXGroup;
 			children = (
-				B7FFC5EE26FE8A3400606636 /* CircularBuffer.h */,
-				B7FFC5EF26FE8A3400606636 /* CircularBuffer.m */,
-				B7FFC5EA26FE8A0900606636 /* Novocaine.h */,
-				B7FFC5EC26FE8A1500606636 /* Novocaine.m */,
-				B7FFC5F126FE8A4900606636 /* CircularBuffer.h */,
-				B7FFC5F226FE8A4900606636 /* CircularBuffer.m */,
-				B7FFC5F726FE8A6D00606636 /* FFTHelper.h */,
-				B7FFC5F826FE8A6D00606636 /* FFTHelper.m */,
-				FD20817226FE94C50067C1F4 /* AudioFileReader.h */,
-				FD20817126FE94C50067C1F4 /* AudioFileReader.m */,
-				B7FFC60326FE9B8000606636 /* MetalGraph.swift */,
-				B7FFC5E826FE86B100606636 /* AudioModel.swift */,
+				B72B574626FEA97200A5B3EE /* AudioFileReader.h */,
+				B72B574726FEA97200A5B3EE /* AudioFileReader.m */,
+				B72B574D26FEA97300A5B3EE /* BufferedOverlapQueue.h */,
+				B72B574E26FEA97300A5B3EE /* BufferedOverlapQueue.m */,
+				B72B574F26FEA97300A5B3EE /* CircularBuffer.h */,
+				B72B574826FEA97200A5B3EE /* CircularBuffer.m */,
+				B72B574026FEA97200A5B3EE /* CubicSpline.h */,
+				B72B574526FEA97200A5B3EE /* CubicSpline.m */,
+				B72B574A26FEA97300A5B3EE /* DataBufferBlock.h */,
+				B72B574C26FEA97300A5B3EE /* DataBufferBlock.m */,
+				B72B574126FEA97200A5B3EE /* FFTHelper.h */,
+				B72B575026FEA97300A5B3EE /* FFTHelper.m */,
+				B72B574326FEA97200A5B3EE /* Novocaine.h */,
+				B72B574926FEA97300A5B3EE /* Novocaine.m */,
+				B7FFC60526FEA5ED00606636 /* AudioModel.swift */,
 				FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */,
 				FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */,
 				FDFC147126FBF7E20039CE1C /* ViewController.swift */,
@@ -300,14 +308,16 @@
 				FDFC149E26FC05570039CE1C /* Module1ViewController.swift in Sources */,
 				FDFC14A026FC05810039CE1C /* Module2ViewController.swift in Sources */,
 				FDFC147226FBF7E20039CE1C /* ViewController.swift in Sources */,
-				B7FFC5F326FE8A4900606636 /* CircularBuffer.m in Sources */,
+				B7FFC60626FEA5ED00606636 /* AudioModel.swift in Sources */,
 				FDFC146E26FBF7E20039CE1C /* AppDelegate.swift in Sources */,
-				FD20817326FE94C50067C1F4 /* AudioFileReader.m in Sources */,
-				B7FFC5F926FE8A6D00606636 /* FFTHelper.m in Sources */,
-				B7FFC5E926FE86B100606636 /* AudioModel.swift in Sources */,
+				B72B575726FEA97300A5B3EE /* DataBufferBlock.m in Sources */,
+				B72B575426FEA97300A5B3EE /* AudioFileReader.m in Sources */,
 				FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */,
-				B7FFC60426FE9B8000606636 /* MetalGraph.swift in Sources */,
-				B7FFC5ED26FE8A1500606636 /* Novocaine.m in Sources */,
+				B72B575926FEA97300A5B3EE /* FFTHelper.m in Sources */,
+				B72B575826FEA97300A5B3EE /* BufferedOverlapQueue.m in Sources */,
+				B72B575626FEA97300A5B3EE /* Novocaine.m in Sources */,
+				B72B575326FEA97300A5B3EE /* CubicSpline.m in Sources */,
+				B72B575526FEA97300A5B3EE /* CircularBuffer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
