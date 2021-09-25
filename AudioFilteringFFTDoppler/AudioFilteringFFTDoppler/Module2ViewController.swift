@@ -15,20 +15,44 @@ class Module2ViewController: UIViewController {
     @IBOutlet weak var hzLabel: UILabel!
     @IBOutlet weak var hzSlider: UISlider!
     
-    let MIN_VALUE:Float = 10.0
-    let MAX_VALUE:Float = 15.0
+    
+    struct AudioConstants{
+        static let AUDIO_BUFFER_SIZE = 1024*4
+        static let MIN_FREQ:Float = 10.0
+        static let MAX_FREQ:Float = 10.0
+    }
+    var freq:Float = AudioConstants.MIN_FREQ{
+        didSet {
+            self.hzLabel.text = hzString(hz: freq)
+        }
+    }
+    
+    let audioModel = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
+    lazy var graph:MetalGraph? = {
+        return MetalGraph(mainView: self.graphView)
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         DispatchQueue.main.async {
-            self.hzSlider.minimumValue = Float(self.MIN_VALUE)
-            self.hzSlider.maximumValue = Float(self.MAX_VALUE)
-            self.hzSlider.value = self.MIN_VALUE
-            self.hzLabel.text = String(format: "%.2lf Hz", self.MIN_VALUE)
+            self.hzSlider.minimumValue = Float(AudioConstants.MIN_FREQ)
+            self.hzSlider.maximumValue = Float(AudioConstants.MAX_FREQ)
+            self.hzSlider.value = AudioConstants.MIN_FREQ
+            self.hzLabel.text = String(format: "%.2lf Hz", AudioConstants.MIN_FREQ)
         }
+        
+        graph?.addGraph(withName: "fft",
+                        shouldNormalize: true,
+                        numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
+        
+        
 
         // Do any additional setup after loading the view.
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        audioModel.pause()
     }
     
     @IBAction func sliderAction(_ sender: Any) {
@@ -46,5 +70,9 @@ class Module2ViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    // MARK: Helper MISC functions
+    private func hzString(hz:Float) -> String {
+        return String(format: "%.2f Hz", hz)
+    }
 }
