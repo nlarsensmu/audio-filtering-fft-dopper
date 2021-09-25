@@ -253,6 +253,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVD-yj-h53">
+                                <rect key="frame" x="183" y="784" width="48" height="30"/>
+                                <state key="normal" title="Unlock"/>
+                                <connections>
+                                    <action selector="unlockButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EW0-8f-1cS"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSc-Cc-RSE">
+                                <rect key="frame" x="186" y="700" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -260,9 +273,13 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="XdV-qt-bru" secondAttribute="bottom" constant="73" id="55N-Ro-Y3I"/>
                             <constraint firstItem="XdV-qt-bru" firstAttribute="centerY" secondItem="BM7-hD-E1m" secondAttribute="centerY" id="Blu-yx-Y5D"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BM7-hD-E1m" secondAttribute="trailing" constant="28" id="Coe-fj-i45"/>
+                            <constraint firstItem="NVD-yj-h53" firstAttribute="top" secondItem="SSc-Cc-RSE" secondAttribute="bottom" constant="63" id="Cq2-JO-B0w"/>
                             <constraint firstItem="xhs-f6-ylN" firstAttribute="centerY" secondItem="poz-K3-lzr" secondAttribute="centerY" id="E4F-9n-S5w"/>
                             <constraint firstItem="XdV-qt-bru" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="FaJ-At-oal"/>
+                            <constraint firstItem="NVD-yj-h53" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="HRH-RJ-Uj3"/>
                             <constraint firstItem="XdV-qt-bru" firstAttribute="top" secondItem="xhs-f6-ylN" secondAttribute="bottom" constant="23" id="Pc5-Tp-LEk"/>
+                            <constraint firstItem="NVD-yj-h53" firstAttribute="firstBaseline" secondItem="BM7-hD-E1m" secondAttribute="baseline" constant="20" symbolType="layoutAnchor" id="Tpc-Ld-1aV"/>
+                            <constraint firstItem="SSc-Cc-RSE" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="caH-Qt-jLk"/>
                             <constraint firstItem="BM7-hD-E1m" firstAttribute="leading" secondItem="XdV-qt-bru" secondAttribute="trailing" priority="1" constant="256" id="fvB-KU-RuH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="poz-K3-lzr" secondAttribute="trailing" constant="28" id="qPs-wy-Zi7"/>
                             <constraint firstItem="poz-K3-lzr" firstAttribute="leading" secondItem="xhs-f6-ylN" secondAttribute="trailing" priority="1" constant="258" id="tVu-Nt-uz4"/>
@@ -273,6 +290,7 @@
                     <connections>
                         <outlet property="hz1" destination="poz-K3-lzr" id="H9U-8l-SAf"/>
                         <outlet property="hz2" destination="BM7-hD-E1m" id="QOP-Z7-cv2"/>
+                        <outlet property="lockedLabel" destination="SSc-Cc-RSE" id="7SB-D8-w7u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

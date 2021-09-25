@@ -12,10 +12,18 @@ class Module1ViewController: UIViewController {
     //MARK: Outlets
     @IBOutlet weak var hz1: UILabel!
     @IBOutlet weak var hz2: UILabel!
+    @IBOutlet weak var lockedLabel: UILabel!
+    @IBAction func unlockButton(_ sender: Any) {
+        DispatchQueue.main.async {
+            self.lockedLabel.text = "Unlocked"
+            self.locked = false
+        }
+    }
     
     //MARK: Setup
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 1024
+        static let AUDIO_PROCESSING_HERTZ = 10.0
     }
     let audio = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
     lazy var graph:MetalGraph? = {
@@ -24,6 +32,8 @@ class Module1ViewController: UIViewController {
     var lastMaxIndex1 = -1
     var lastMaxIndex2 = -1
     var noChangeCount = 0
+    var locked:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,10 +48,10 @@ class Module1ViewController: UIViewController {
                         numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
         
         
-        audio.startMicrophoneProcessing(withFps: 100.0)
+        audio.startMicrophoneProcessing(withFps: AudioConstants.AUDIO_PROCESSING_HERTZ)
         audio.play()
         
-        Timer.scheduledTimer(timeInterval: 0.1, target: self,
+        Timer.scheduledTimer(timeInterval: 1/AudioConstants.AUDIO_PROCESSING_HERTZ, target: self,
             selector: #selector(self.updateGraph),
             userInfo: nil,
             repeats: true)
@@ -52,13 +62,14 @@ class Module1ViewController: UIViewController {
         let indicies = audio.windowedMaxFor(nums: audio.fftData, windowSize: 10)
         let peaks = audio.getTopIndices(indices: indicies, nums: audio.fftData)
         let mean = vDSP.mean(audio.fftData)
-        print(mean)
-        DispatchQueue.main.async {
-            if let peak1:Int = peaks[0] as Int?,
-               let peak2:Int = peaks[1] as Int?{
-                
-                self.hz1.text = String(peak1) + "__" +  String(self.audio.fftData[peak1])
-                self.hz2.text = String(peak2) + "__" +  String(self.audio.fftData[peak2])
+        if !self.locked {
+            DispatchQueue.main.async {
+                if let peak1:Int = peaks[0] as Int?,
+                   let peak2:Int = peaks[1] as Int?{
+                    
+                    self.hz1.text = String(peak1) + "__" +  String(self.audio.fftData[peak1])
+                    self.hz2.text = String(peak2) + "__" +  String(self.audio.fftData[peak2])
+                }
             }
         }
         self.graph?.updateGraph(
@@ -71,10 +82,10 @@ class Module1ViewController: UIViewController {
         )
         
         if peaks[0] != peaks[1] {
-            if peaks[0] == self.lastMaxIndex1 && peaks[1] == self.lastMaxIndex2{
+            if peaks[0] == self.lastMaxIndex1 && peaks[1] == self.lastMaxIndex2 && self.locked == false{
                 self.noChangeCount += 1
                 if noChangeCount == 3{
-                    //here is where we would move to the next screen
+                    self.locked = true
                 }
             }
             else{
