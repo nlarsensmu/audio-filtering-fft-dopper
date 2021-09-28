@@ -16,7 +16,6 @@ class Module1ViewController: UIViewController {
     @IBAction func unlockButton(_ sender: Any) {
         DispatchQueue.main.async {
             self.lockedLabel.text = "Unlocked"
-            self.locked = false
         }
     }
     
@@ -24,24 +23,21 @@ class Module1ViewController: UIViewController {
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 1024
         static let AUDIO_PROCESSING_HERTZ = 100.0
-        static let LOCKING_ITERATION_NUMBERS = 30
-        static let WINDOW_SIZE = 5
-        static let AMOUNT_KEPT_MAXES = 10
+        static let WINDOW_SIZE = 10
+        static let THRESHOLD = -10
     }
     let audio = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
     lazy var graph:MetalGraph? = {
         return MetalGraph(mainView: self.view)
     }()
     var currentIndex = 0
-    var max1: [Int] = [Int].init(repeating: -999999, count: AudioConstants.AMOUNT_KEPT_MAXES)
-    var max2: [Int] = [Int].init(repeating: -999999, count: AudioConstants.AMOUNT_KEPT_MAXES)
         
     // Old method
     var lastMaxIndex1 = -1
     var lastMaxIndex2 = -1
     var noChangeCount = 0
     
-    var locked:Bool = false
+    var noticedNoise:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,9 +75,19 @@ class Module1ViewController: UIViewController {
         )
         
         //Update the labelsry
+        
         let indicies = audio.windowedMaxFor(nums: audio.fftData, windowSize: AudioConstants.WINDOW_SIZE)
         let peaks = audio.getTopIndices(indices: indicies, nums: audio.fftData)
-        if !self.locked {
+        if peaks[0] > AudioConstants.THRESHOLD {
+            self.noticedNoise = true
+            if let peak1:Int = peaks[0] as Int?,
+               let peak2:Int = peaks[1] as Int?{
+                self.hz1.text = String(peak1)
+                self.hz2.text = String(peak2)
+            }
+        }
+        
+        /*if !self.locked {
             DispatchQueue.main.async {
                 if let peak1:Int = peaks[0] as Int?,
                    let peak2:Int = peaks[1] as Int?{
@@ -115,7 +121,7 @@ class Module1ViewController: UIViewController {
         if max1MatchCount >= Int(Float(AudioConstants.AMOUNT_KEPT_MAXES) * 0.5) && max2MatchCount >= Int(Float(AudioConstants.AMOUNT_KEPT_MAXES) * 0.5) {
             self.locked = true
             self.lockedLabel.text = "Locked"
-        }
+        }*/
         /*
         if peaks[0] != peaks[1] {
             if peaks[0] == self.lastMaxIndex1 && peaks[1] == self.lastMaxIndex2 && self.locked == false{
