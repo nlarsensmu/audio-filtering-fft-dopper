@@ -20,6 +20,7 @@ class AudioModel {
     var fftData:[Float]
     var equalize:[Float]
     var setStuff:Bool = false
+    var debugging:Bool = false
     
     var leftSumStandard:Float = -Float.infinity
     var rightSumStandard:Float = -Float.infinity
@@ -122,23 +123,63 @@ class AudioModel {
     }
     
     // If Hand is moving towards the screen return 1, if away return 2, else return 0
+    // Get the max of the left and right sub arrays from the displayed frequency.
+    // If that sound is abover a certian threshhold act on it.
+    /*
+     This will approach determing if the hand is coming with the following methodology
+     1) split the FFT into 3 subsets
+        * Left of the played frequecny, with a offset reserved for the target frequecny
+        * Right fo the played frequency with a offest reserved for the target frequecny
+        * The Center inbetween these
+        |----------------[^---------------------*--------------------------^]------------------------|
+                          ^                                                ^
+        freqIdx-windowSize-centerDisplacement   ^   freq+windowSize+centerDisplacement
+                                            freqIdx(the played frequency)
+     
+     2) Once we have those, we will ensure values are positive for easier processing
+     3) Then we will find the max of the left and right, if those are within some threshold
+        of the played frequency in amplitude, we will act on that information.
+     */
+    
     func determineHand(windowSize:Int, displacementFromCenter:Int, freq:Float) -> (String, Float, Float) {
         
-        let indices:[Int] = windowedMaxFor(nums: fftData, windowSize: 20)
         
         let freqIdx = getFreqIndex(freq: freq)
-        let topIndices = getTopIndices(indices: indices, nums: fftData)
+        // zoomed in FFT
+        var leftSubSet = Array(fftData[freqIdx-displacementFromCenter-windowSize..<freqIdx-displacementFromCenter])
+        var rightSubSet = Array(fftData[freqIdx+displacementFromCenter+1...freqIdx+displacementFromCenter+windowSize])
+        var centerSubSet = Array(fftData[freqIdx-displacementFromCenter...freqIdx+displacementFromCenter])
         
+        // get the min value of these three and add it to all to get them above the x-axis
+        let mins = [vDSP.minimum(leftSubSet), vDSP.minimum(rightSubSet), vDSP.minimum(centerSubSet)]
+        let min = vDSP.minimum(mins)
         
-        if topIndices[1] < freqIdx {
-            return ("Left Big", fftData[topIndices[1]]/fftData[freqIdx], 0.0)
+        leftSubSet = vDSP.add(-min, leftSubSet)
+        rightSubSet = vDSP.add(-min, rightSubSet)
+        centerSubSet = vDSP.add(-min, centerSubSet)
+        
+        if debugging {
+            printArrayAsPoints(nums: leftSubSet)
+            printArrayAsPoints(nums: rightSubSet)
+            printArrayAsPoints(nums: centerSubSet)
+            debugging = false
         }
-        if topIndices[1] < freqIdx {
-            return ("Right Big",0.0, fftData[topIndices[1]]/fftData[freqIdx])
+        
+        let leftMax = vDSP.maximum(leftSubSet)
+        let rightMax = vDSP.maximum(rightSubSet)
+        
+        var handText = ""
+        if leftMax/centerSubSet[displacementFromCenter] > 0.7{
+            handText = "Away!"
+        }
+        else if rightMax/centerSubSet[displacementFromCenter] > 0.7{
+            handText = "Towards!"
+        }
+        else {
+            handText = "Unclear!"
         }
         
-        return ("", 0,0)
-            
+        return (handText, leftMax, rightMax)
     }
     
     
@@ -224,12 +265,6 @@ class AudioModel {
     // Returns indicies of peaks in any order
     func windowedMaxFor(nums:[Float], windowSize:Int) -> [Int] {
         
-        var debugging = true
-        if debugging {
-            printFftAsPoints()
-            debugging = false
-        }
-        
         var max = nums[0]
         var maxIndex = 0
         var maxIndicies: [Int] = [Int].init()
@@ -310,11 +345,13 @@ class AudioModel {
     }
     
     // MARK: Debuggin methods
-    func printFftAsPoints() {
-        for i in 0..<fftData.count {
-            print(String(format: "(%d, %lf)", i, fftData[i]))
+    func printArrayAsPoints(nums:[Float]) {
+        for i in 0..<nums.count {
+            print(String(format: "(%d, %f)", i, nums[i]))
         }
     }
-
+    func printFftAsPoints() {
+        printArrayAsPoints(nums: fftData)
+    }
 
 }

@@ -18,7 +18,8 @@ class HandViewController: UIViewController {
         static let FFT_WINDOW_SIZE:Int = 100
     }
     struct Module2Constants {
-        static let windowSize = 15
+        static let windowSize = 50
+        
         static let displacementFromCenter = 5
     }
     
