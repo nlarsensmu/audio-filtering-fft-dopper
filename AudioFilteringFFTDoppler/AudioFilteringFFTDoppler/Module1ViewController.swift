@@ -22,9 +22,9 @@ class Module1ViewController: UIViewController {
     //MARK: Setup
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 1024
-        static let AUDIO_PROCESSING_HERTZ = 100.0
+        static let AUDIO_PROCESSING_HERTZ = 200.0
         static let WINDOW_SIZE = 10
-        static let THRESHOLD = -10
+        static let THRESHOLD:Float = -20.0
     }
     let audio = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
     lazy var graph:MetalGraph? = {
@@ -37,7 +37,7 @@ class Module1ViewController: UIViewController {
     var lastMaxIndex2 = -1
     var noChangeCount = 0
     
-    var noticedNoise:Bool = true
+    var noticedNoise:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,8 +78,18 @@ class Module1ViewController: UIViewController {
         
         let indicies = audio.windowedMaxFor(nums: audio.fftData, windowSize: AudioConstants.WINDOW_SIZE)
         let peaks = audio.getTopIndices(indices: indicies, nums: audio.fftData)
-        if peaks[0] > AudioConstants.THRESHOLD {
+        let test = self.audio.fftData[peaks[0]]
+        print(test)
+        if self.audio.fftData[peaks[0]] > AudioConstants.THRESHOLD {
             self.noticedNoise = true
+            if let peak1:Int = peaks[0] as Int?,
+               let peak2:Int = peaks[1] as Int?{
+                self.hz1.text = String(peak1)
+                self.hz2.text = String(peak2)
+            }
+        }
+        else if self.noticedNoise == false {
+            
             if let peak1:Int = peaks[0] as Int?,
                let peak2:Int = peaks[1] as Int?{
                 self.hz1.text = String(peak1)

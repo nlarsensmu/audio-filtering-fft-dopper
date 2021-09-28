@@ -223,58 +223,91 @@ class AudioModel {
     
     // Returns indicies of peaks in any order
     func windowedMaxFor(nums:[Float], windowSize:Int) -> [Int] {
-          var maxLength = 0
-          var max = nums[0]
-          var maxIndicies: [Int] = [Int].init()
-          for i in 0...nums.count - windowSize - 1{
-              if let currMax = nums[i...i+windowSize].max(){
-                  if currMax == max{
-                      max = currMax
-                      maxLength += 1
-                      if (maxLength == windowSize){
-                          maxIndicies.append(i - windowSize + 1)
-                      }
-                  }
-                  else{
-                      maxLength = 0
-                      max = currMax
-                  }
-              }
-          }
-        return maxIndicies
+        
+        var debugging = true
+        if debugging {
+            printFftAsPoints()
+            debugging = false
+        }
+        
+        var max = nums[0]
+        var maxIndex = 0
+        var maxIndicies: [Int] = [Int].init()
+        var repeatCount = 0
+
+        for i in 0..<nums.count - windowSize{
+            let maxes = getMaxPoint(startIndex: i, endIndex: i + windowSize, arr: nums)
+            let currMax = maxes.1
+            let currIndexMax = maxes.0
+            //we are in a platue
+            if currMax == max{
+                repeatCount += 1
+            }
+            //We have left the platue need to add the median index
+            else if repeatCount >= 2 {
+                maxIndicies.append(maxIndex)
+                repeatCount = 0
+            }
+            else{
+                repeatCount = 0
+                max = currMax
+                maxIndex = currIndexMax
+            }
+                
+            }
+            return maxIndicies
     }
     
     // gets the max two values nums[indicies]
     func getTopIndices(indices:[Int], nums:[Float]) -> [Int]{
-        var maxIndex1 = indices[0]
-        var maxIndex2 = indices[0]
+        
         var returnIndices = [Int].init(repeating: 0, count: 2)
-        if indices.count == 1{
+        if indices.count == 1 {
             return returnIndices
         }
+        if indices.count == 0 {
+            return returnIndices
+        }
+        var maxIndex1 = indices[0]
+        var maxIndex2 = indices[0]
         if nums[indices[1]] > nums[maxIndex1] {
             maxIndex1 = indices[1]
         }
         else {
             maxIndex2 = indices[1]
         }
-        for i in 2...indices.count - 1{
-            //new number is greater than both
-            if nums[indices[i]] > nums[maxIndex1]{
-                maxIndex2 = maxIndex1
-                maxIndex1 = indices[i]
+        if indices.count > 2 {
+            for i in 2...indices.count - 1{
+                //new number is greater than both
+                if nums[indices[i]] > nums[maxIndex1]{
+                    maxIndex2 = maxIndex1
+                    maxIndex1 = indices[i]
+                }
+                //just greate than the second
+                else if nums[indices[i]] > nums[maxIndex2]{
+                    maxIndex2 = indices[i]
+                }
             }
-            //just greate than the second
-            else if nums[indices[i]] > nums[maxIndex2]{
-                maxIndex2 = indices[i]
+            returnIndices[0] = maxIndex1
+            returnIndices[1] = maxIndex2
+            
+            return returnIndices
+        }
+        else{
+            return indices
+        }
+    }
+    func getMaxPoint(startIndex:Int, endIndex:Int, arr:[Float]) -> (Int, Float) {
+        var max = arr[startIndex]
+        var maxIndex = startIndex
+        for i in startIndex + 1...endIndex{
+            if arr[i] > max {
+                max = arr[i]
+                maxIndex = i
             }
         }
-        returnIndices[0] = maxIndex1
-        returnIndices[1] = maxIndex2
-        
-        return returnIndices
+        return (maxIndex, max)
     }
-    
     
     // MARK: Debuggin methods
     func printFftAsPoints() {
