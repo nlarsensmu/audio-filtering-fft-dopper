@@ -8,6 +8,7 @@
 
 import Foundation
 import Accelerate
+import CoreImage
 
 class AudioModel {
     
@@ -18,7 +19,10 @@ class AudioModel {
     var timeData:[Float] // This is different, before it was calculated everytime
     var fftData:[Float]
     var equalize:[Float]
-    var verbose:Bool = true
+    var setStuff:Bool = false
+    
+    var leftSumStandard:Float = -Float.infinity
+    var rightSumStandard:Float = -Float.infinity
     
     static let FFT_WINDOW_SIZE = 100
     
@@ -83,7 +87,7 @@ class AudioModel {
     func getFreqIndex(freq:Float) -> Int {
         if let manager = self.audioManager {
             let fs = manager.samplingRate
-            let df = fs/Double(BUFFER_SIZE)
+            let df = fs/(Double(BUFFER_SIZE))
             return Int(Double(freq)/df)
         }
         return 0
@@ -97,11 +101,44 @@ class AudioModel {
         return (targetIndex-halfWindow, targetIndex+halfWindow)
     }
     
-    // If Hand is moving towards the screen return 1, if away return 2, else return 0
-    func determineHand(targetFreq: Float) -> Int {
-        let targetIndex = getFreqIndex(freq: targetFreq)
+    // Set up left/rightSumStandards
+    // If this function ends up with -inf for either base, it will run again  waiting for the first good mic sample.
+    func setStandardSums(windowSize:Int, displacementFromCenter:Int, freq:Float) -> Bool {
         
-        return 0;
+        let idxFreq = getFreqIndex(freq: freq)
+        
+        let leftLower = idxFreq-windowSize-displacementFromCenter, leftUpper = idxFreq-displacementFromCenter
+        let leftArray = Array(self.fftData[(leftLower)...(leftUpper)])
+        self.leftSumStandard = vDSP.sum(leftArray)
+        
+        let rightUpper = idxFreq+windowSize+displacementFromCenter, rightLower = idxFreq+displacementFromCenter
+        let rightArray = Array(self.fftData[(rightLower)...(rightUpper)])
+        self.rightSumStandard = vDSP.sum(rightArray)
+        
+        if self.rightSumStandard > -Float.infinity && self.leftSumStandard > -Float.infinity {
+            return true
+        }
+        return false
+    }
+    
+    // If Hand is moving towards the screen return 1, if away return 2, else return 0
+    func determineHand(windowSize:Int, displacementFromCenter:Int, freq:Float) -> (String, Float, Float) {
+        
+        let indices:[Int] = windowedMaxFor(nums: fftData, windowSize: 20)
+        
+        let freqIdx = getFreqIndex(freq: freq)
+        let topIndices = getTopIndices(indices: indices, nums: fftData)
+        
+        
+        if topIndices[1] < freqIdx {
+            return ("Left Big", fftData[topIndices[1]]/fftData[freqIdx], 0.0)
+        }
+        if topIndices[1] < freqIdx {
+            return ("Right Big",0.0, fftData[topIndices[1]]/fftData[freqIdx])
+        }
+        
+        return ("", 0,0)
+            
     }
     
     
@@ -145,19 +182,7 @@ class AudioModel {
                 let start:Int = i*width, end = (i*width + width) - 1
 
                 self.equalize[i] = vDSP.maximum(fftData[start...end])
-//                self.equalize[i] = fftData[start]
-//                var max:Float = fftData[start]
-//                for val in fftData[start...end] {
-//                    if val > max {
-//                        max = val
-//                    }
-//                }
             }
-            // at this point, we have saved the data to the arrays:
-            //   timeData: the raw audio samples
-            //   fftData:  the FFT of those same samples
-            // the user can now use these variables however they like
-            verbose = false
         }
     }
     
@@ -196,7 +221,7 @@ class AudioModel {
         self.inputBuffer?.addNewFloatData(data, withNumSamples: Int64(numFrames))
     }
     
-    
+    // Returns indicies of peaks in any order
     func windowedMaxFor(nums:[Float], windowSize:Int) -> [Int] {
           var maxLength = 0
           var max = nums[0]
@@ -219,6 +244,7 @@ class AudioModel {
         return maxIndicies
     }
     
+    // gets the max two values nums[indicies]
     func getTopIndices(indices:[Int], nums:[Float]) -> [Int]{
         var maxIndex1 = indices[0]
         var maxIndex2 = indices[0]
@@ -248,4 +274,14 @@ class AudioModel {
         
         return returnIndices
     }
+    
+    
+    // MARK: Debuggin methods
+    func printFftAsPoints() {
+        for i in 0..<fftData.count {
+            print(String(format: "(%d, %lf)", i, fftData[i]))
+        }
+    }
+
+
 }
