@@ -124,25 +124,21 @@ class AudioModel {
     // If Hand is moving towards the screen return 1, if away return 2, else return 0
     func determineHand(windowSize:Int, displacementFromCenter:Int, freq:Float) -> (String, Float, Float) {
         
-        let idxFreq = getFreqIndex(freq: freq)
+        let indices:[Int] = windowedMaxFor(nums: fftData, windowSize: 20)
         
-        let leftLower = idxFreq-windowSize-displacementFromCenter, leftUpper = idxFreq-displacementFromCenter
-        let leftArray = Array(self.fftData[(leftLower)...(leftUpper)])
-        let leftSum = vDSP.sum(leftArray)
+        let freqIdx = getFreqIndex(freq: freq)
+        let topIndices = getTopIndices(indices: indices, nums: fftData)
         
-        let rightUpper = idxFreq+windowSize+displacementFromCenter, rightLower = idxFreq+displacementFromCenter
-        let rightArray = Array(self.fftData[(rightLower)...(rightUpper)])
-        let rightSum = vDSP.sum(rightArray)
         
-        var handStr:String = ""
-        if leftSum > self.leftSumStandard - self.leftSumStandard*(0.1) {
-            handStr = "Towards!"
-        } else if rightSum > self.rightSumStandard - self.rightSumStandard*(0.1) {
-            handStr = "Away!"
-        } else {
-            handStr = "Undecided!"
+        if topIndices[1] < freqIdx {
+            return ("Left Big", fftData[topIndices[1]]/fftData[freqIdx], 0.0)
         }
-        return (handStr, leftSum, rightSum)
+        if topIndices[1] < freqIdx {
+            return ("Right Big",0.0, fftData[topIndices[1]]/fftData[freqIdx])
+        }
+        
+        return ("", 0,0)
+            
     }
     
     
