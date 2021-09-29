@@ -16,27 +16,33 @@ class Module1ViewController: UIViewController {
     @IBAction func unlockButton(_ sender: Any) {
         DispatchQueue.main.async {
             self.lockedLabel.text = "Unlocked"
+            self.noticedNoise = false
         }
     }
+    //Math to justify the use of thes constants.
     
+    //Minumum buffer size.
+    // F_s / N = frequency resolution.  where F_s is the sampling frequency and N is the AUDIO_BUFFER_SIZE
+    // We need a 6 Hz resolution and our samping frequency is 48,000
+    // Therefore the minimum buffer size is 48,000 / 6 = 8,000
+    
+    //Maximum buffer size.
+    //The phone is going to sample at 48,000 samples a second.
+    // 48,000 (Samples / sec) *  (1 sec / 1,000 mil) = 48 samples / ms
+    // 48 (samples / ms) * ( 200 ms / 1) = 9600 samples.
+    //because 8192 is within this window we will use it without interpolating points.
     //MARK: Setup
     struct AudioConstants{
-        static let AUDIO_BUFFER_SIZE = 1024
+        static let AUDIO_BUFFER_SIZE = 4096*2
         static let AUDIO_PROCESSING_HERTZ = 200.0
-        static let WINDOW_SIZE = 10
-        static let THRESHOLD:Float = -20.0
+        static let WINDOW_SIZE = 11
+        static let THRESHOLD:Float = 0.0
     }
     let audio = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
     lazy var graph:MetalGraph? = {
         return MetalGraph(mainView: self.view)
     }()
     var currentIndex = 0
-        
-    // Old method
-    var lastMaxIndex1 = -1
-    var lastMaxIndex2 = -1
-    var noChangeCount = 0
-    
     var noticedNoise:Bool = false
     
     override func viewDidLoad() {
@@ -78,74 +84,27 @@ class Module1ViewController: UIViewController {
         
         let indicies = audio.windowedMaxFor(nums: audio.fftData, windowSize: AudioConstants.WINDOW_SIZE)
         let peaks = audio.getTopIndices(indices: indicies, nums: audio.fftData)
-        let test = self.audio.fftData[peaks[0]]
-        print(test)
+        
         if self.audio.fftData[peaks[0]] > AudioConstants.THRESHOLD {
             self.noticedNoise = true
             if let peak1:Int = peaks[0] as Int?,
                let peak2:Int = peaks[1] as Int?{
-                self.hz1.text = String(peak1)
-                self.hz2.text = String(peak2)
+                
+                self.hz1.text =
+                    String(format:"%.2f", Float(peak1) * (48000.0/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
+                self.hz2.text = String(format:"%.2f", Float(peak2) * (48000.0/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
             }
         }
         else if self.noticedNoise == false {
             
             if let peak1:Int = peaks[0] as Int?,
                let peak2:Int = peaks[1] as Int?{
-                self.hz1.text = String(peak1)
-                self.hz2.text = String(peak2)
+                
+                self.hz1.text =
+                    String(format:"%.2f", Float(peak1) * (48000.0/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
+                self.hz2.text = String(format:"%.2f", Float(peak2) * (48000.0/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
             }
         }
-        
-        /*if !self.locked {
-            DispatchQueue.main.async {
-                if let peak1:Int = peaks[0] as Int?,
-                   let peak2:Int = peaks[1] as Int?{
-                    
-                    self.hz1.text = String(peak1) + "__" +  String(self.audio.fftData[peak1])
-                    self.hz2.text = String(peak2) + "__" +  String(self.audio.fftData[peak2])
-                }
-            }
-        }
-        
-        //add to the arrays we've made
-        self.max1[self.currentIndex] = peaks[0]
-        self.max2[self.currentIndex] = peaks[1]
-        currentIndex += 1
-        if currentIndex == AudioConstants.AMOUNT_KEPT_MAXES{
-            currentIndex = 0
-        }
-        var max1MatchCount = 0
-        for max in max1 {
-            if peaks[0] == max{
-                max1MatchCount += 1
-            }
-        }
-        var max2MatchCount = 0
-        for max in max2 {
-            if peaks[1] == max{
-                max2MatchCount += 1
-            }
-        }
-        
-        if max1MatchCount >= Int(Float(AudioConstants.AMOUNT_KEPT_MAXES) * 0.5) && max2MatchCount >= Int(Float(AudioConstants.AMOUNT_KEPT_MAXES) * 0.5) {
-            self.locked = true
-            self.lockedLabel.text = "Locked"
-        }*/
-        /*
-        if peaks[0] != peaks[1] {
-            if peaks[0] == self.lastMaxIndex1 && peaks[1] == self.lastMaxIndex2 && self.locked == false{
-                self.noChangeCount += 1
-                if noChangeCount == AudioConstants.LOCKING_ITERATION_NUMBERS{
-                    self.locked = true
-                }
-            }
-            else{
-                self.lastMaxIndex1 = peaks[0]
-                self.lastMaxIndex2 = peaks[1]
-                self.noChangeCount = 0
-            }
-        }*/
         
     }
 
