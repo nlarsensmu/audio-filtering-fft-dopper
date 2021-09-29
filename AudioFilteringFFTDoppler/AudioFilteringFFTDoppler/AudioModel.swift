@@ -53,16 +53,6 @@ class AudioModel {
         }
     }
     
-    
-    func startProcessingSinewaveForPlayback(withFreq:Float=330.0){
-        sineFrequency = withFreq
-        // Two examples are given that use either objective c or that use swift
-        //   the swift code for loop is slightly slower thatn doing this in c,
-        //   but the implementations are very similar
-        //self.audioManager?.outputBlock = self.handleSpeakerQueryWithSinusoid // swift for loop
-        self.audioManager?.setOutputBlockToPlaySineWave(sineFrequency)
-    }
-    
     // You must call this when you want the audio to start being handled by our model
     func play(){
         if let manager = self.audioManager{
@@ -85,102 +75,6 @@ class AudioModel {
     
     //==============================================
     // MARK: Shared Calculations
-    func getFreqIndex(freq:Float) -> Int {
-        if let manager = self.audioManager {
-            let fs = manager.samplingRate
-            let df = fs/(Double(BUFFER_SIZE))
-            return Int(Double(freq)/df)
-        }
-        return 0
-    }
-    
-    //==============================================
-    // MARK: Module 2 Calculation
-    func getWindowIndices(freq:Float, windowSize:Int) -> (Int, Int) {
-        let targetIndex:Int = getFreqIndex(freq: freq)
-        let halfWindow:Int = windowSize/2
-        return (targetIndex-halfWindow, targetIndex+halfWindow)
-    }
-    
-    // Set up left/rightSumStandards
-    // If this function ends up with -inf for either base, it will run again  waiting for the first good mic sample.
-    func setStandardSums(windowSize:Int, displacementFromCenter:Int, freq:Float) -> Bool {
-        
-        let idxFreq = getFreqIndex(freq: freq)
-        
-        let leftLower = idxFreq-windowSize-displacementFromCenter, leftUpper = idxFreq-displacementFromCenter
-        let leftArray = Array(self.fftData[(leftLower)...(leftUpper)])
-        self.leftSumStandard = vDSP.sum(leftArray)
-        
-        let rightUpper = idxFreq+windowSize+displacementFromCenter, rightLower = idxFreq+displacementFromCenter
-        let rightArray = Array(self.fftData[(rightLower)...(rightUpper)])
-        self.rightSumStandard = vDSP.sum(rightArray)
-        
-        if self.rightSumStandard > -Float.infinity && self.leftSumStandard > -Float.infinity {
-            return true
-        }
-        return false
-    }
-    
-    // If Hand is moving towards the screen return 1, if away return 2, else return 0
-    // Get the max of the left and right sub arrays from the displayed frequency.
-    // If that sound is abover a certian threshhold act on it.
-    /*
-     This will approach determing if the hand is coming with the following methodology
-     1) split the FFT into 3 subsets
-        * Left of the played frequecny, with a offset reserved for the target frequecny
-        * Right fo the played frequency with a offest reserved for the target frequecny
-        * The Center inbetween these
-        |----------------[^---------------------*--------------------------^]------------------------|
-                          ^                                                ^
-        freqIdx-windowSize-centerDisplacement   ^   freq+windowSize+centerDisplacement
-                                            freqIdx(the played frequency)
-     
-     2) Once we have those, we will ensure values are positive for easier processing
-     3) Then we will find the max of the left and right, if those are within some threshold
-        of the played frequency in amplitude, we will act on that information.
-     */
-    
-    func determineHand(windowSize:Int, displacementFromCenter:Int, freq:Float) -> (String, Float, Float) {
-        
-        
-        let freqIdx = getFreqIndex(freq: freq)
-        // zoomed in FFT
-        var leftSubSet = Array(fftData[freqIdx-displacementFromCenter-windowSize..<freqIdx-displacementFromCenter])
-        var rightSubSet = Array(fftData[freqIdx+displacementFromCenter+1...freqIdx+displacementFromCenter+windowSize])
-        var centerSubSet = Array(fftData[freqIdx-displacementFromCenter...freqIdx+displacementFromCenter])
-        
-        // get the min value of these three and add it to all to get them above the x-axis
-        let mins = [vDSP.minimum(leftSubSet), vDSP.minimum(rightSubSet), vDSP.minimum(centerSubSet)]
-        let min = vDSP.minimum(mins)
-        
-        leftSubSet = vDSP.add(-min, leftSubSet)
-        rightSubSet = vDSP.add(-min, rightSubSet)
-        centerSubSet = vDSP.add(-min, centerSubSet)
-        
-        if debugging {
-            printArrayAsPoints(nums: leftSubSet)
-            printArrayAsPoints(nums: rightSubSet)
-            printArrayAsPoints(nums: centerSubSet)
-            debugging = false
-        }
-        
-        let leftMax = vDSP.maximum(leftSubSet)
-        let rightMax = vDSP.maximum(rightSubSet)
-        
-        var handText = ""
-        if leftMax/centerSubSet[displacementFromCenter] > 0.7{
-            handText = "Away!"
-        }
-        else if rightMax/centerSubSet[displacementFromCenter] > 0.7{
-            handText = "Towards!"
-        }
-        else {
-            handText = "Unclear!"
-        }
-        
-        return (handText, leftMax, rightMax)
-    }
     
     
     //==========================================
