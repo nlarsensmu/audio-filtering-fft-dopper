@@ -39,22 +39,26 @@ class HandViewController: UIViewController {
     }
     @IBOutlet weak var leftLabel: UILabel!
     @IBOutlet weak var rightLabel: UILabel!
-    @IBOutlet weak var centerLabel: UILabel!
-    @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var tempLabel2: UILabel!
-    @IBOutlet weak var tempLabel3: UILabel!
+    @IBOutlet weak var leftBaselineLabel: UILabel!
+    @IBOutlet weak var rightBaseLineLabel: UILabel!
     
     var freq:Float?
+    var percentage:Float?
     var audioModel:Module2AudioModel?
+    var hideDebug:Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let f = freq {
+        if let f = freq, let p = self.percentage {
             self.audioModel = Module2AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE,
                                                 frequency: f,
                                                 window: Module2Constants.windowSize,
-                                                displace: Module2Constants.displacementFromCenter)
+                                                displace: Module2Constants.displacementFromCenter,
+                                                percentage: p)
+        }
+        if hideDebug {
+            hideDebugging()
         }
         
         graph?.addGraph(withName: "fft_full",
@@ -90,6 +94,14 @@ class HandViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    
+    func hideDebugging() {
+        leftLabel.isHidden = true
+        rightLabel.isHidden = true
+        leftBaselineLabel.isHidden = true
+        rightBaseLineLabel.isHidden = true
+    }
+    
     // The first time, this will just get the standards and the rest of the time it will apply the change in those
     @objc
     func updateGraph(){
@@ -99,8 +111,8 @@ class HandViewController: UIViewController {
             if !model.baselinesSet() {
                 let baselines = model.setBaselines()
                 DispatchQueue.main.async {
-                    self.tempLabel2.text = String(format: "%f", baselines.0)
-                    self.tempLabel3.text = String(format: "%f", baselines.1)
+                    self.leftBaselineLabel.text = String(format: "%f", baselines.0)
+                    self.rightBaseLineLabel.text = String(format: "%f", baselines.1)
                 }
                 return
             }

@@ -31,3 +31,10 @@ Then we calculate the distance from each left and right peak to the center. This
 
 ### Determine Hand Phase
 During this phase the app will constantly determine if the a hand is mving towards or away from the phone. We will determine this by calculating the three values above on the real time data, then if the displacement is bigger than some percentage of the orignal displacement (set to 90%) then we will report on that value  appropriately.
+
+### Debugging Guide
+
+Top left Label: Constantly updating displacment from the max of the left window to the max of the peak window
+Top right Label: Constantly updating displacment from the max of the right window to the max of the peak window
+Bottom left Label: The baseline value from the loading phase for the left window
+Bottom right Label: The baseline balue from the loading pahse for the right window 

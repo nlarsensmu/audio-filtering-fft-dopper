@@ -27,6 +27,7 @@ class Module2AudioModel {
     private var sineFreq:Float
     private var windowSize:Int
     private var displacementFromCenter:Int
+    private var percentageThreshold:Float
     
     private lazy var audioManager:Novocaine? = {
         return Novocaine.audioManager()
@@ -45,7 +46,7 @@ class Module2AudioModel {
     
     
     // MARK: Public Methods
-    init(buffer_size:Int, frequency:Float, window:Int, displace:Int) {
+    init(buffer_size:Int, frequency:Float, window:Int, displace:Int, percentage:Float) {
         BUFFER_SIZE = buffer_size
         // anything not lazily instatntiated should be allocated here
         timeData = Array.init(repeating: 0.0, count: BUFFER_SIZE)
@@ -53,8 +54,8 @@ class Module2AudioModel {
         sineFreq = frequency
         windowSize = window
         displacementFromCenter = displace
+        percentageThreshold = percentage
     }
-    
     
     func getFreqIndex(freq:Float) -> Int {
         if let manager = self.audioManager {
@@ -211,10 +212,10 @@ class Module2AudioModel {
         let centerMax = vDSP.maximum(centerSubset)
         
         var handText = ""
-        if (centerMax - leftMax) < 0.9*leftBaseline {
+        if (centerMax - leftMax) < percentageThreshold*leftBaseline {
             handText = "Away!"
         }
-        else if (centerMax - rightMax) < 0.8*rightBaseline {
+        else if (centerMax - rightMax) < percentageThreshold*rightBaseline {
             handText = "Towards!"
         }
         else {
