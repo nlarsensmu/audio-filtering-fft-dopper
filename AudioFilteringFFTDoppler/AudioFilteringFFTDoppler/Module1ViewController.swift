@@ -19,6 +19,7 @@ class Module1ViewController: UIViewController {
             self.noticedNoise = false
         }
     }
+    @IBOutlet weak var tempSwitch: UISwitch!
     //Math to justify the use of thes constants.
     
     //Minumum buffer size.
@@ -33,10 +34,10 @@ class Module1ViewController: UIViewController {
     //because 8192 is within this window we will use it without interpolating points.
     //MARK: Setup
     struct AudioConstants{
-        static let AUDIO_BUFFER_SIZE = 4096*2
-        static let AUDIO_PROCESSING_HERTZ = 200.0
+    static let AUDIO_BUFFER_SIZE = 4096*2
+        static let AUDIO_PROCESSING_HERTZ = 100.0
         static let WINDOW_SIZE = 11
-        static let THRESHOLD:Float = 0.0
+        static let THRESHOLD:Float = 10
     }
     let audio = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
     lazy var graph:MetalGraph? = {
@@ -47,6 +48,7 @@ class Module1ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         graph?.addGraph(withName: "fft",
                         shouldNormalize: true,
@@ -59,10 +61,12 @@ class Module1ViewController: UIViewController {
                         numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
         
         
-        audio.startMicrophoneProcessing(withFps: AudioConstants.AUDIO_PROCESSING_HERTZ)
+        audio.startMicrophoneProcessing(withFps: 20)
+        //audio.startMicrophoneProcessing(withFps: AudioConstants.AUDIO_PROCESSING_HERTZ)
+
         audio.play()
         
-        Timer.scheduledTimer(timeInterval: 1/AudioConstants.AUDIO_PROCESSING_HERTZ, target: self,
+        Timer.scheduledTimer(timeInterval: 0.05, target: self,
             selector: #selector(self.updateGraph),
             userInfo: nil,
             repeats: true)
@@ -84,29 +88,28 @@ class Module1ViewController: UIViewController {
         
         let indicies = audio.windowedMaxFor(nums: audio.fftData, windowSize: AudioConstants.WINDOW_SIZE)
         let peaks = audio.getTopIndices(indices: indicies, nums: audio.fftData)
-        
+        let betterPeaks:[Float] = audio.interpolateIndices(indides: peaks)
+        var peak1:Float = Float(peaks[0])
+        var peak2:Float = Float(peaks[1])
+        if tempSwitch.isOn {
+            peak1 = betterPeaks[0]
+            peak2 = betterPeaks[1]
+        }
+        let sampleingRate = Float(self.audio.samplingFrequency())
         if self.audio.fftData[peaks[0]] > AudioConstants.THRESHOLD {
             self.noticedNoise = true
-            if let peak1:Int = peaks[0] as Int?,
-               let peak2:Int = peaks[1] as Int?{
-                
                 self.hz1.text =
-                    String(format:"%.2f", Float(peak1) * (48000.0/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
-                self.hz2.text = String(format:"%.2f", Float(peak2) * (48000.0/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
+                    String(format:"%.2f", Float(peak1) * (sampleingRate/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
+                self.hz2.text = String(format:"%.2f", Float(peak2) * (sampleingRate/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
             }
-        }
-        else if self.noticedNoise == false {
-            
-            if let peak1:Int = peaks[0] as Int?,
-               let peak2:Int = peaks[1] as Int?{
-                
-                self.hz1.text =
-                    String(format:"%.2f", Float(peak1) * (48000.0/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
-                self.hz2.text = String(format:"%.2f", Float(peak2) * (48000.0/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
-            }
-        }
         
-    }
+        else if self.noticedNoise == false {
+                self.hz1.text =
+                    String(format:"%.2f", Float(peak1) * (sampleingRate/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
+                self.hz2.text = String(format:"%.2f", Float(peak2) * (sampleingRate/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
+            }
+        }
+    
 
     /*
     // MARK: - Navigation

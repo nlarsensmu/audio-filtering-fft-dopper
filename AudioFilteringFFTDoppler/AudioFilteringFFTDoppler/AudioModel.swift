@@ -291,6 +291,39 @@ class AudioModel {
             return indices
         }
     }
+    
+    //m_1 = fftData[i-1]
+    //m_2 = fftData[i]
+    //m_3 = fftData[i+1]
+    func interpolateIndices(indides:[Int]) -> [Float]{
+        var answers: [Float] = []
+        
+        var sampleingRate:Float = 0.0
+        if let manager = audioManager {
+            sampleingRate = Float(manager.samplingRate)
+        }
+        
+        let df = sampleingRate / Float(self.BUFFER_SIZE)
+        for i in indides{
+            if(i != 0 && i != indides.count - 1){
+                let f_2:Float = Float(i)
+                
+                let m_1:Float = fftData[i-1]
+                let m_2:Float = fftData[i]
+                let m_3:Float = fftData[i+1]
+                
+                let guess = f_2 + (m_1 - m_3)/(m_3 - 3*m_2 + m_1)*(df)/(2)
+                answers.append(guess)
+                
+//                answers.append(Float(i) - ((fftData[i-1] - fftData[i+1])/(fftData[i+1] - 2*fftData[i] + fftData[i-1]))*(df/2))
+            }
+            else{
+                answers.append(Float(i))
+            }
+        }
+        return answers
+    }
+    
     func getMaxPoint(startIndex:Int, endIndex:Int, arr:[Float]) -> (Int, Float) {
         var max = arr[startIndex]
         var maxIndex = startIndex
