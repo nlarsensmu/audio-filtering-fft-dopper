@@ -224,12 +224,6 @@ class AudioModel {
     // Returns indicies of peaks in any order
     func windowedMaxFor(nums:[Float], windowSize:Int) -> [Int] {
         
-        var debugging = true
-        if debugging {
-            printFftAsPoints()
-            debugging = false
-        }
-        
         var max = nums[0]
         var maxIndex = 0
         var maxIndicies: [Int] = [Int].init()

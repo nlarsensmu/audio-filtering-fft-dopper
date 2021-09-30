@@ -516,13 +516,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H6Q8KU2898;
+				DEVELOPMENT_TEAM = 2U52JNW2M5;
 				INFOPLIST_FILE = AudioFilteringFFTDoppler/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = SMU.AudioFilteringFFTDoppler.nick;
+				PRODUCT_BUNDLE_IDENTIFIER = SMU.AudioFilteringFFTDoppler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AudioFilteringFFTDoppler/AudioFilteringFFTDoppler-Bridging-Header.h";
