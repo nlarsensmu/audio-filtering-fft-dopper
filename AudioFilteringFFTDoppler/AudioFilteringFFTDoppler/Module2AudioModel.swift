@@ -15,12 +15,12 @@ class Module2AudioModel {
     // the user can access these arrays at any time and plot them if they like
     var timeData:[Float] // This is different, before it was calculated everytime
     var fftData:[Float]
-    var fftDataPositive:[Float]
     var setStuff:Bool = false
     var debugging:Bool = false
     private var leftBaseline:Float = 0.0
     private var rightBaseline:Float = 0.0
     private var baselineCount = 0
+    private static let numberOfBaselines = 10
     
     // Members set in constructor
     private var BUFFER_SIZE:Int
@@ -50,7 +50,6 @@ class Module2AudioModel {
         // anything not lazily instatntiated should be allocated here
         timeData = Array.init(repeating: 0.0, count: BUFFER_SIZE)
         fftData = Array.init(repeating: 0.0, count: BUFFER_SIZE/2)
-        fftDataPositive = Array.init(repeating: 0.0, count: BUFFER_SIZE/2)
         sineFreq = frequency
         windowSize = window
         displacementFromCenter = displace
@@ -94,6 +93,10 @@ class Module2AudioModel {
         //self.audioManager?.outputBlock = self.handleSpeakerQueryWithSinusoid // swift for loop
         self.audioManager?.setOutputBlockToPlaySineWave(sineFreq)
     }
+    func stopProcessingSinewaveForPlayback() {
+        self.audioManager?.pause()
+        self.audioManager?.sineFrequency = 0
+    }
     
     // in obj-C it was (^InputBlock)(float *data, UInt32 numFrames, UInt32 numChannels)
     // and in swift this translates to:
@@ -132,12 +135,6 @@ class Module2AudioModel {
             fftHelper!.performForwardFFT(withData: &timeData,
                                          andCopydBMagnitudeToBuffer: &fftData)
             
-            // Force fftData to be positive
-            let minValue = vDSP.minimum(fftData)
-            if minValue < 0 {
-                print(minValue)
-                fftDataPositive = vDSP.add(-minValue, fftData)
-            }
         }
     }
     //==============================================
@@ -149,7 +146,7 @@ class Module2AudioModel {
     }
 
     func baselinesSet() -> Bool {
-        return baselineCount >= 5
+        return baselineCount >= Module2AudioModel.numberOfBaselines
     }
     // Set up left/rightSumStandards
     // If this function ends up with -inf for either base, it will run again  waiting for the first good mic sample.
@@ -157,15 +154,17 @@ class Module2AudioModel {
         
         let freqIdx = getFreqIndex(freq: sineFreq)
         // zoomed in FFT
-        let leftSubSet = Array(fftDataPositive[freqIdx-displacementFromCenter-windowSize..<freqIdx-displacementFromCenter])
-        let rightSubSet = Array(fftDataPositive[freqIdx+displacementFromCenter+1...freqIdx+displacementFromCenter+windowSize])
+        let leftSubset = Array(fftData[freqIdx-displacementFromCenter-windowSize..<freqIdx-displacementFromCenter])
+        let rightSubset = Array(fftData[freqIdx+displacementFromCenter+1...freqIdx+displacementFromCenter+windowSize])
+        let centerMean = Array(fftData[freqIdx-displacementFromCenter...freqIdx+displacementFromCenter])
         
-        let leftMean = vDSP.mean(leftSubSet)
-        let rightMean = vDSP.mean(rightSubSet)
+        let leftMax = vDSP.maximum(leftSubset)
+        let rightMax = vDSP.maximum(rightSubset)
+        let centerMax = vDSP.maximum(centerMean)
         
-        if leftMean > -Float.infinity && rightMean > -Float.infinity && leftMean != 0 && rightMean != 0 {
-            self.leftBaseline += (leftMean/Float(5.0))
-            self.rightBaseline += (rightMean/Float(5.0))
+        if leftMax > -Float.infinity && rightMax > -Float.infinity && leftMax != 0 && rightMax != 0 {
+            self.leftBaseline += (centerMax - leftMax)/Float(Module2AudioModel.numberOfBaselines)
+            self.rightBaseline += (centerMax - rightMax)/Float(Module2AudioModel.numberOfBaselines)
             self.baselineCount += 1
         }
         return (self.leftBaseline, self.rightBaseline)
@@ -176,7 +175,7 @@ class Module2AudioModel {
     // If that sound is abover a certian threshhold act on it.
     /*
      This will approach determing if the hand is coming with the following methodology
-     1) split the FFT into 3 subsets
+     1) split the FFT into 3 Subsets
         * Left of the played frequecny, with a offset reserved for the target frequecny
         * Right fo the played frequency with a offest reserved for the target frequecny
         * The Center inbetween these
@@ -195,33 +194,34 @@ class Module2AudioModel {
         
         let freqIdx = getFreqIndex(freq: freq)
         // zoomed in FFT
-        var leftSubSet = Array(fftDataPositive[freqIdx-displacementFromCenter-windowSize..<freqIdx-displacementFromCenter])
-        var rightSubSet = Array(fftDataPositive[freqIdx+displacementFromCenter+1...freqIdx+displacementFromCenter+windowSize])
-        var centerSubSet = Array(fftDataPositive[freqIdx-displacementFromCenter...freqIdx+displacementFromCenter])
+        let leftSubset = Array(fftData[freqIdx-displacementFromCenter-windowSize..<freqIdx-displacementFromCenter])
+        let rightSubset = Array(fftData[freqIdx+displacementFromCenter+1...freqIdx+displacementFromCenter+windowSize])
+        let centerSubset = Array(fftData[freqIdx-displacementFromCenter...freqIdx+displacementFromCenter])
         
         
         if debugging {
-            printArrayAsPoints(nums: leftSubSet)
-            printArrayAsPoints(nums: rightSubSet)
-            printArrayAsPoints(nums: centerSubSet)
+            printArrayAsPoints(nums: leftSubset)
+            printArrayAsPoints(nums: rightSubset)
+            printArrayAsPoints(nums: centerSubset)
             debugging = false
         }
         
-        let leftMax = vDSP.maximum(leftSubSet)
-        let rightMax = vDSP.maximum(rightSubSet)
+        let leftMax = vDSP.maximum(leftSubset)
+        let rightMax = vDSP.maximum(rightSubset)
+        let centerMax = vDSP.maximum(centerSubset)
         
         var handText = ""
-        if leftMax > 1.2*leftBaseline{
+        if (centerMax - leftMax) < 0.9*leftBaseline {
             handText = "Away!"
         }
-        else if rightMax > 1.2*rightBaseline{
+        else if (centerMax - rightMax) < 0.8*rightBaseline {
             handText = "Towards!"
         }
         else {
             handText = "Unclear!"
         }
         
-        return (handText, leftMax, rightMax)
+        return (handText, centerMax - leftMax, centerMax - rightMax)
     }
     
     // MARK: Debuggin methods

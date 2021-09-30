@@ -78,13 +78,13 @@ class HandViewController: UIViewController {
             model.play()
             
             let seconds = 0.5
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                Timer.scheduledTimer(timeInterval: 0.05, target: self,
-                    selector: #selector(self.updateGraph),
-                    userInfo: nil,
-                    repeats: true)
-                // Put your code which should be executed with a delay here
-            }
+            
+            Thread.sleep(forTimeInterval: seconds)
+            
+            Timer.scheduledTimer(timeInterval: 0.05, target: self,
+                selector: #selector(self.updateGraph),
+                userInfo: nil,
+                repeats: true)
         }
         
         // Do any additional setup after loading the view.
@@ -159,7 +159,12 @@ class HandViewController: UIViewController {
             model.pause()
         }
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let model = audioModel {
+            model.stopProcessingSinewaveForPlayback()
+            
+        }
+    }
     
 
 }
