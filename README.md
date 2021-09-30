@@ -7,6 +7,14 @@ This is the project for Lab 2 of Moble Sensing and Learning. The goal of this la
 ### Interpolation
 
 ### Math behind buffer size
+We need the buffer to only contain sounds that last 200ms, i.e. We will figure out how many samples are in 200ms
+
+```math
+Fs = 48000Hz
+Fs = 48kHz (how many samples in 1 ms)
+48 * 200 = 9600 samples
+```
+So our buffer size needs to be less than 9600. We will use 8192 since it is a power of 2. With interpolation we will get the resolution we need as well.
 
 ## Module 2
 Module 2 will be done in 3 phases
