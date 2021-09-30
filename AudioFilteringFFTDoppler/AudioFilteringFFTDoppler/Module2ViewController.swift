@@ -7,13 +7,14 @@
 
 import UIKit
 
-class Module2ViewController: UIViewController {
+class Module2ViewController: UIViewController, UITextFieldDelegate {
 
     
+    @IBOutlet weak var percentageTextField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var hzLabel: UILabel!
     @IBOutlet weak var hzSlider: UISlider!
-    
+    @IBOutlet weak var debugginSwitch: UISwitch!
     
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 2048*2
@@ -35,6 +36,7 @@ class Module2ViewController: UIViewController {
             self.hzSlider.maximumValue = Float(AudioConstants.MAX_FREQ)
             self.hzSlider.value = AudioConstants.MIN_FREQ
             self.hzLabel.text = self.kHzString(hz: self.freq)
+            self.percentageTextField.text = "0.9"
         }
         // Do any additional setup after loading the view.
     }
@@ -45,6 +47,9 @@ class Module2ViewController: UIViewController {
     }
     
     
+    @IBAction func tapGesture(_ sender: Any) {
+        self.percentageTextField.resignFirstResponder()
+    }
     @IBAction func sliderAction(_ sender: Any) {
         DispatchQueue.main.async {
             self.freq = self.hzSlider.value
@@ -61,6 +66,11 @@ class Module2ViewController: UIViewController {
         // Pass the selected object to the new view controller.
         if let vc = segue.destination as? HandViewController {
             vc.freq = self.freq * 1000
+            if let p = Float(percentageTextField.text!) {
+                vc.percentage = p
+            }
+            if !debugginSwitch.isOn {
+                vc.hideDebug = true            }
         }
     }
     
@@ -68,5 +78,15 @@ class Module2ViewController: UIViewController {
     // MARK: Helper MISC functions
     private func kHzString(hz:Float) -> String {
         return String(format: "%.2f kHz", hz)
+    }
+    
+    // MARK: Text Field
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.percentageTextField.resignFirstResponder()
+        return true
+    }
+    @IBAction func didCancelkeyboard(_ sender: Any) {
+        self.percentageTextField.resignFirstResponder()
     }
 }

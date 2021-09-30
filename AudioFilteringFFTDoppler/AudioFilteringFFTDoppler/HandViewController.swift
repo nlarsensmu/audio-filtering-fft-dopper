@@ -18,18 +18,16 @@ class HandViewController: UIViewController {
         static let FFT_WINDOW_SIZE:Int = 100
     }
     struct Module2Constants {
-        static let windowSize = 15
+        static let windowSize = 50
+        
         static let displacementFromCenter = 5
     }
     
     let fftWindow = 1000
-    let audioModel = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
     lazy var graph:MetalGraph? = {
         return MetalGraph(mainView: self.view)
     }()
     
-    var standardSet = false
-
     
     @IBOutlet weak var handLabel: UILabel!
     var handText:String = "" {
@@ -41,15 +39,27 @@ class HandViewController: UIViewController {
     }
     @IBOutlet weak var leftLabel: UILabel!
     @IBOutlet weak var rightLabel: UILabel!
-    @IBOutlet weak var centerLabel: UILabel!
-    @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var tempLabel2: UILabel!
-    @IBOutlet weak var tempLabel3: UILabel!
+    @IBOutlet weak var leftBaselineLabel: UILabel!
+    @IBOutlet weak var rightBaseLineLabel: UILabel!
     
     var freq:Float?
+    var percentage:Float?
+    var audioModel:Module2AudioModel?
+    var hideDebug:Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let f = freq, let p = self.percentage {
+            self.audioModel = Module2AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE,
+                                                frequency: f,
+                                                window: Module2Constants.windowSize,
+                                                displace: Module2Constants.displacementFromCenter,
+                                                percentage: p)
+        }
+        if hideDebug {
+            hideDebugging()
+        }
         
         graph?.addGraph(withName: "fft_full",
                         shouldNormalize: true,
@@ -63,41 +73,65 @@ class HandViewController: UIViewController {
                         shouldNormalize: false,
                         numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
 
-        if let f = self.freq {
-            audioModel.startProcessingSinewaveForPlayback(withFreq: f)
-        }
-        audioModel.startMicrophoneProcessing(withFps: 10)
-        audioModel.play()
         
-        Timer.scheduledTimer(timeInterval: 0.05, target: self,
-            selector: #selector(self.updateGraph),
-            userInfo: nil,
-            repeats: true)
+        if let model = self.audioModel {
+            if let f = self.freq {
+                model.startProcessingSinewaveForPlayback(withFreq: f)
+            }
+            model.startMicrophoneProcessing(withFps: 10)
+            model.play()
+            
+            let seconds = 0.5
+            
+            Thread.sleep(forTimeInterval: seconds)
+            
+            Timer.scheduledTimer(timeInterval: 0.05, target: self,
+                selector: #selector(self.updateGraph),
+                userInfo: nil,
+                repeats: true)
+        }
         
         // Do any additional setup after loading the view.
+    }
+    
+    
+    func hideDebugging() {
+        leftLabel.isHidden = true
+        rightLabel.isHidden = true
+        leftBaselineLabel.isHidden = true
+        rightBaseLineLabel.isHidden = true
     }
     
     // The first time, this will just get the standards and the rest of the time it will apply the change in those
     @objc
     func updateGraph(){
-        // periodically, display the audio data
         
-        if standardSet || (audioModel.rightSumStandard > -Float.infinity) || (audioModel.leftSumStandard > -Float.infinity){
+        if let model = audioModel {
+            // take the first 5 (non -infty) samples as a baseline
+            if !model.baselinesSet() {
+                let baselines = model.setBaselines()
+                DispatchQueue.main.async {
+                    self.leftBaselineLabel.text = String(format: "%f", baselines.0)
+                    self.rightBaseLineLabel.text = String(format: "%f", baselines.1)
+                }
+                return
+            }
             
+            // periodically, display the audio data
             if debugging {
                 debugging = false
-                audioModel.printFftAsPoints()
+                model.printFftAsPoints()
             }
             
             if let f = freq {
-                let range = audioModel.getWindowIndices(freq: f, windowSize: AudioConstants.FFT_WINDOW_SIZE)
-                let subset:[Float] = Array(self.audioModel.fftData[range.0...range.1])
+                let range = model.getWindowIndices(freq: f, windowSize: AudioConstants.FFT_WINDOW_SIZE)
+                let subset:[Float] = Array(model.fftData[range.0...range.1])
                 self.graph?.updateGraph(
                     data: subset,
                     forKey: "fft"
                 )
                 
-                let handData = self.audioModel.determineHand(windowSize:Module2Constants.windowSize,
+                let handData = model.determineHand(windowSize:Module2Constants.windowSize,
                                                             displacementFromCenter:Module2Constants.displacementFromCenter,
                                                             freq:f)
                 DispatchQueue.main.async {
@@ -107,35 +141,21 @@ class HandViewController: UIViewController {
                 }
             }
             self.graph?.updateGraph(
-                data: self.audioModel.fftData,
+                data: model.fftData,
                 forKey: "fft_full"
             )
             self.graph?.updateGraph(
-                data: self.audioModel.timeData,
+                data: model.timeData,
                 forKey: "time"
             )
-            // Testing for summing stuff
-        } else {
-            print("first set")
-            audioModel.printFftAsPoints()
-            if let f = freq {
-                let success = audioModel.setStandardSums(windowSize: Module2Constants.windowSize,
-                                           displacementFromCenter: Module2Constants.displacementFromCenter,
-                                           freq: f)
-                DispatchQueue.main.async {
-                    self.tempLabel2.text = String(format: "%lf" ,
-                                                  self.audioModel.leftSumStandard)
-                    self.tempLabel3.text = String(format: "%lf",
-                                                  self.audioModel.rightSumStandard)
-                }
-                self.standardSet = success
-            }
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        audioModel.pause()
+        if let model = audioModel {
+            model.pause()
+        }
     }
     
 
@@ -146,9 +166,17 @@ class HandViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        audioModel.pause()
+        
+        if let model = audioModel {
+            model.pause()
+        }
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let model = audioModel {
+            model.stopProcessingSinewaveForPlayback()
+            
+        }
+    }
     
 
 }
