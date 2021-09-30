@@ -46,6 +46,9 @@ class HandViewController: UIViewController {
     var percentage:Float?
     var audioModel:Module2AudioModel?
     var hideDebug:Bool = false
+    var showSoundGraph:Bool = false
+    var showZoomedGraph:Bool = false
+    var showFFTGraph:Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,18 +64,23 @@ class HandViewController: UIViewController {
             hideDebugging()
         }
         
-        graph?.addGraph(withName: "fft_full",
-                        shouldNormalize: true,
-                        numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE/2)
+        if showFFTGraph {
+            graph?.addGraph(withName: "fft_full",
+                            shouldNormalize: true,
+                            numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE/2)
+        }
         
-        graph?.addGraph(withName: "fft",
-                        shouldNormalize: true,
-                        numPointsInGraph: 100)
+        if showZoomedGraph {
+            graph?.addGraph(withName: "fft",
+                            shouldNormalize: true,
+                            numPointsInGraph: 100)
+        }
         
-        graph?.addGraph(withName: "time",
-                        shouldNormalize: false,
-                        numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
-
+        if showSoundGraph {
+            graph?.addGraph(withName: "time",
+                            shouldNormalize: false,
+                            numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
+        }
         
         if let model = self.audioModel {
             if let f = self.freq {
@@ -126,10 +134,13 @@ class HandViewController: UIViewController {
             if let f = freq {
                 let range = model.getWindowIndices(freq: f, windowSize: AudioConstants.FFT_WINDOW_SIZE)
                 let subset:[Float] = Array(model.fftData[range.0...range.1])
-                self.graph?.updateGraph(
-                    data: subset,
-                    forKey: "fft"
-                )
+                
+                if showZoomedGraph {
+                    self.graph?.updateGraph(
+                        data: subset,
+                        forKey: "fft"
+                    )
+                }
                 
                 let handData = model.determineHand(windowSize:Module2Constants.windowSize,
                                                             displacementFromCenter:Module2Constants.displacementFromCenter,
@@ -140,14 +151,18 @@ class HandViewController: UIViewController {
                     self.rightLabel.text = String(format: "%lf", handData.2)
                 }
             }
-            self.graph?.updateGraph(
-                data: model.fftData,
-                forKey: "fft_full"
-            )
-            self.graph?.updateGraph(
-                data: model.timeData,
-                forKey: "time"
-            )
+            if showFFTGraph {
+                self.graph?.updateGraph(
+                    data: model.fftData,
+                    forKey: "fft_full"
+                )
+            }
+            if showSoundGraph {
+                self.graph?.updateGraph(
+                    data: model.timeData,
+                    forKey: "time"
+                )
+            }
         }
     }
     

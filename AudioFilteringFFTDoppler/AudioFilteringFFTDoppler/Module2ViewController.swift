@@ -15,6 +15,9 @@ class Module2ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var hzLabel: UILabel!
     @IBOutlet weak var hzSlider: UISlider!
     @IBOutlet weak var debugginSwitch: UISwitch!
+    @IBOutlet weak var soundGraphSwitch: UISwitch!
+    @IBOutlet weak var freqGraphSwitch: UISwitch!
+    @IBOutlet weak var zoomGraphSwitch: UISwitch!
     
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 2048*2
@@ -69,8 +72,10 @@ class Module2ViewController: UIViewController, UITextFieldDelegate {
             if let p = Float(percentageTextField.text!) {
                 vc.percentage = p
             }
-            if !debugginSwitch.isOn {
-                vc.hideDebug = true            }
+            vc.hideDebug = !debugginSwitch.isOn
+            vc.showSoundGraph = soundGraphSwitch.isOn
+            vc.showZoomedGraph = zoomGraphSwitch.isOn
+            vc.showFFTGraph = freqGraphSwitch.isOn
         }
     }
     
