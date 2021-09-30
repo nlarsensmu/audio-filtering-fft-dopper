@@ -20,6 +20,7 @@ class AudioModel {
     var fftData:[Float]
     var equalize:[Float]
     var setStuff:Bool = false
+    var debugging:Bool = false
     
     var leftSumStandard:Float = -Float.infinity
     var rightSumStandard:Float = -Float.infinity
@@ -52,16 +53,6 @@ class AudioModel {
         }
     }
     
-    
-    func startProcessingSinewaveForPlayback(withFreq:Float=330.0){
-        sineFrequency = withFreq
-        // Two examples are given that use either objective c or that use swift
-        //   the swift code for loop is slightly slower thatn doing this in c,
-        //   but the implementations are very similar
-        //self.audioManager?.outputBlock = self.handleSpeakerQueryWithSinusoid // swift for loop
-        self.audioManager?.setOutputBlockToPlaySineWave(sineFrequency)
-    }
-    
     // You must call this when you want the audio to start being handled by our model
     func play(){
         if let manager = self.audioManager{
@@ -84,62 +75,6 @@ class AudioModel {
     
     //==============================================
     // MARK: Shared Calculations
-    func getFreqIndex(freq:Float) -> Int {
-        if let manager = self.audioManager {
-            let fs = manager.samplingRate
-            let df = fs/(Double(BUFFER_SIZE))
-            return Int(Double(freq)/df)
-        }
-        return 0
-    }
-    
-    //==============================================
-    // MARK: Module 2 Calculation
-    func getWindowIndices(freq:Float, windowSize:Int) -> (Int, Int) {
-        let targetIndex:Int = getFreqIndex(freq: freq)
-        let halfWindow:Int = windowSize/2
-        return (targetIndex-halfWindow, targetIndex+halfWindow)
-    }
-    
-    // Set up left/rightSumStandards
-    // If this function ends up with -inf for either base, it will run again  waiting for the first good mic sample.
-    func setStandardSums(windowSize:Int, displacementFromCenter:Int, freq:Float) -> Bool {
-        
-        let idxFreq = getFreqIndex(freq: freq)
-        
-        let leftLower = idxFreq-windowSize-displacementFromCenter, leftUpper = idxFreq-displacementFromCenter
-        let leftArray = Array(self.fftData[(leftLower)...(leftUpper)])
-        self.leftSumStandard = vDSP.sum(leftArray)
-        
-        let rightUpper = idxFreq+windowSize+displacementFromCenter, rightLower = idxFreq+displacementFromCenter
-        let rightArray = Array(self.fftData[(rightLower)...(rightUpper)])
-        self.rightSumStandard = vDSP.sum(rightArray)
-        
-        if self.rightSumStandard > -Float.infinity && self.leftSumStandard > -Float.infinity {
-            return true
-        }
-        return false
-    }
-    
-    // If Hand is moving towards the screen return 1, if away return 2, else return 0
-    func determineHand(windowSize:Int, displacementFromCenter:Int, freq:Float) -> (String, Float, Float) {
-        
-        let indices:[Int] = windowedMaxFor(nums: fftData, windowSize: 20)
-        
-        let freqIdx = getFreqIndex(freq: freq)
-        let topIndices = getTopIndices(indices: indices, nums: fftData)
-        
-        
-        if topIndices[1] < freqIdx {
-            return ("Left Big", fftData[topIndices[1]]/fftData[freqIdx], 0.0)
-        }
-        if topIndices[1] < freqIdx {
-            return ("Right Big",0.0, fftData[topIndices[1]]/fftData[freqIdx])
-        }
-        
-        return ("", 0,0)
-            
-    }
     
     
     //==========================================
@@ -304,11 +239,13 @@ class AudioModel {
     }
     
     // MARK: Debuggin methods
-    func printFftAsPoints() {
-        for i in 0..<fftData.count {
-            print(String(format: "(%d, %lf)", i, fftData[i]))
+    func printArrayAsPoints(nums:[Float]) {
+        for i in 0..<nums.count {
+            print(String(format: "(%d, %f)", i, nums[i]))
         }
     }
-
+    func printFftAsPoints() {
+        printArrayAsPoints(nums: fftData)
+    }
 
 }
