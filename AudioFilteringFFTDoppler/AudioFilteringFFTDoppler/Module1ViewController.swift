@@ -12,14 +12,7 @@ class Module1ViewController: UIViewController {
     //MARK: Outlets
     @IBOutlet weak var hz1: UILabel!
     @IBOutlet weak var hz2: UILabel!
-    @IBOutlet weak var lockedLabel: UILabel!
-    @IBAction func unlockButton(_ sender: Any) {
-        DispatchQueue.main.async {
-            self.lockedLabel.text = "Unlocked"
-            self.noticedNoise = false
-        }
-    }
-    @IBOutlet weak var tempSwitch: UISwitch!
+    
     //Math to justify the use of thes constants.
     
     //Minumum buffer size.
@@ -34,12 +27,12 @@ class Module1ViewController: UIViewController {
     //because 8192 is within this window we will use it without interpolating points.
     //MARK: Setup
     struct AudioConstants{
-    static let AUDIO_BUFFER_SIZE = 4096*2
+    static let AUDIO_BUFFER_SIZE = 8192*2
         static let AUDIO_PROCESSING_HERTZ = 100.0
         static let WINDOW_SIZE = 11
-        static let THRESHOLD:Float = 10
+        static let THRESHOLD:Float = 12
     }
-    let audio = Module1AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
+    let audio = Module1AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE, threshold: AudioConstants.THRESHOLD)
     lazy var graph:MetalGraph? = {
         return MetalGraph(mainView: self.view)
     }()
@@ -88,9 +81,17 @@ class Module1ViewController: UIViewController {
         
         let frequencies = audio.getTopFrequencies(windowSize: AudioConstants.WINDOW_SIZE,withInterp: true)
         
-        DispatchQueue.main.async {
-            self.hz1.text = String(format: "%f", frequencies.0)
-            self.hz2.text = String(format: "%f", frequencies.1)
+        // If the sound was above the threshold lock it in.
+        
+        if frequencies.2 || !noticedNoise {
+            DispatchQueue.main.async {
+                self.hz1.text = String(format: "%f", frequencies.0)
+                self.hz2.text = String(format: "%f", frequencies.1)
+            }
+        }
+        
+        if frequencies.2 {
+            noticedNoise = true
         }
     }
     

@@ -125,12 +125,6 @@ class HandViewController: UIViewController {
                 return
             }
             
-            // periodically, display the audio data
-            if debugging {
-                debugging = false
-                model.printFftAsPoints()
-            }
-            
             if let f = freq {
                 let range = model.getWindowIndices(freq: f, windowSize: AudioConstants.FFT_WINDOW_SIZE)
                 let subset:[Float] = Array(model.fftData[range.0...range.1])

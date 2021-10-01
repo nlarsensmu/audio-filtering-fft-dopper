@@ -11,13 +11,15 @@ class Module1AudioModel: AudioModel {
 
     // MARK: Public Methods
     //===========================================
-    override
-    init(buffer_size:Int) {
+    
+    init(buffer_size:Int, threshold:Float) {
+        self.thresholdDb = threshold
         super.init(buffer_size: buffer_size)
     }
     
-    // Return the to fequencies with or without interpolation
-    func getTopFrequencies(windowSize:Int, withInterp:Bool) -> (Float, Float) {
+    // Return the to fequencies with or without interpolation, in the form of:
+    // (A Hz, B Hz, A isAboveThreshold)
+    func getTopFrequencies(windowSize:Int, withInterp:Bool) -> (Float, Float, Bool) {
 
         let allPeaks = windowedMaxFor(windowSize: windowSize)
         let peaks = getTopTwoIndices(indices: allPeaks)
@@ -30,10 +32,14 @@ class Module1AudioModel: AudioModel {
         
         if withInterp {
             let interpedPeaks = interpolatePoints(indices: peaks)
-            return (df*interpedPeaks.0, df*interpedPeaks.1)
+            return (df*interpedPeaks.0,
+                    df*interpedPeaks.1,
+                    fftData[peaks.0] > self.thresholdDb)
         }
         else {
-            return (df*Float(peaks.0), df*Float(peaks.1))
+            return (df*Float(peaks.0),
+                    df*Float(peaks.1),
+                    fftData[peaks.0] > self.thresholdDb)
         }
     }
     
@@ -43,6 +49,8 @@ class Module1AudioModel: AudioModel {
     private lazy var audioManager:Novocaine? = {
         return Novocaine.audioManager()
     }()
+    
+    private var thresholdDb:Float
     
     // MARK: Private Functions
     //====================================

@@ -19,7 +19,6 @@ class AudioModel {
     var timeData:[Float] // This is different, before it was calculated everytime
     var fftData:[Float]
     var setStuff:Bool = false
-    var debugging:Bool = false
     
     //==========================================
     // MARK: Private Properties
@@ -80,13 +79,6 @@ class AudioModel {
         }
     }
     
-    func samplingFrequency() -> Double {
-        if let manager = self.audioManager {
-            return manager.samplingRate
-        }
-        return 0.0
-    }
-    
     // MARK: Callback Methods
     //==========================================
     @objc
@@ -123,16 +115,4 @@ class AudioModel {
         // copy samples from the microphone into circular buffer
         self.inputBuffer?.addNewFloatData(data, withNumSamples: Int64(numFrames))
     }
-    
-    // MARK: Debuggin methods
-    //=====================================
-    func printArrayAsPoints(nums:[Float]) {
-        for i in 0..<nums.count {
-            print(String(format: "(%d, %f)", i, nums[i]))
-        }
-    }
-    func printFftAsPoints() {
-        printArrayAsPoints(nums: fftData)
-    }
-
 }
