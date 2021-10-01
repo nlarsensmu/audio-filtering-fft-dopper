@@ -85,6 +85,10 @@ class Module1ViewController: UIViewController {
         
         if frequencies.2 || !noticedNoise {
             DispatchQueue.main.async {
+                if frequencies.2 {
+                    self.hz1.backgroundColor = UIColor.green
+                    self.hz2.backgroundColor = UIColor.green
+                }
                 self.hz1.text = String(format: "%f", frequencies.0)
                 self.hz2.text = String(format: "%f", frequencies.1)
             }
@@ -95,7 +99,14 @@ class Module1ViewController: UIViewController {
         }
     }
     
-
+    @IBAction func resetLocks(_ sender: Any) {
+        noticedNoise = false
+        DispatchQueue.main.async {
+            self.hz1.backgroundColor = UIColor.lightGray
+            self.hz2.backgroundColor = UIColor.lightGray
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

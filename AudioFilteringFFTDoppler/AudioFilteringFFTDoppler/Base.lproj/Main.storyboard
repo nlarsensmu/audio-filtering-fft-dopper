@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -330,6 +331,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 Loudest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdV-qt-bru">
                                 <rect key="frame" x="20" y="768" width="76" height="21"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -343,15 +345,25 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Loudest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xhs-f6-ylN">
                                 <rect key="frame" x="20" y="724" width="74" height="21"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVD-yj-h53">
-                                <rect key="frame" x="183" y="791" width="48" height="30"/>
-                                <state key="normal" title="Unlock"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsx-PF-6lM">
+                                <rect key="frame" x="155.5" y="659" width="103" height="31"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Reset Locks">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="unlockButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EW0-8f-1cS"/>
+                                    <action selector="resetLocks:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cSf-MX-QNk"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -363,10 +375,10 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BM7-hD-E1m" secondAttribute="trailing" constant="28" id="Coe-fj-i45"/>
                             <constraint firstItem="xhs-f6-ylN" firstAttribute="centerY" secondItem="poz-K3-lzr" secondAttribute="centerY" id="E4F-9n-S5w"/>
                             <constraint firstItem="XdV-qt-bru" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="FaJ-At-oal"/>
-                            <constraint firstItem="NVD-yj-h53" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="HRH-RJ-Uj3"/>
                             <constraint firstItem="XdV-qt-bru" firstAttribute="top" secondItem="xhs-f6-ylN" secondAttribute="bottom" constant="23" id="Pc5-Tp-LEk"/>
-                            <constraint firstItem="NVD-yj-h53" firstAttribute="firstBaseline" secondItem="BM7-hD-E1m" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="Tpc-Ld-1aV"/>
+                            <constraint firstItem="wsx-PF-6lM" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Vom-VP-kVz"/>
                             <constraint firstItem="BM7-hD-E1m" firstAttribute="leading" secondItem="XdV-qt-bru" secondAttribute="trailing" priority="1" constant="256" id="fvB-KU-RuH"/>
+                            <constraint firstItem="xhs-f6-ylN" firstAttribute="top" secondItem="wsx-PF-6lM" secondAttribute="bottom" constant="34" id="hZ4-dW-jPe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="poz-K3-lzr" secondAttribute="trailing" constant="28" id="qPs-wy-Zi7"/>
                             <constraint firstItem="poz-K3-lzr" firstAttribute="leading" secondItem="xhs-f6-ylN" secondAttribute="trailing" priority="1" constant="258" id="tVu-Nt-uz4"/>
                             <constraint firstItem="xhs-f6-ylN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="wNR-HT-prV"/>
@@ -384,6 +396,9 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
