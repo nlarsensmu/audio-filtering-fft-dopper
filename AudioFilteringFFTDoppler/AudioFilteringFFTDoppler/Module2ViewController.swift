@@ -9,7 +9,7 @@ import UIKit
 
 class Module2ViewController: UIViewController, UITextFieldDelegate {
 
-    
+    //MARK: Outlets
     @IBOutlet weak var percentageTextField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var hzLabel: UILabel!
@@ -19,6 +19,7 @@ class Module2ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var freqGraphSwitch: UISwitch!
     @IBOutlet weak var zoomGraphSwitch: UISwitch!
     
+    //MARK: Properties
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 2048*2
         static let MIN_FREQ:Float = 15.0
@@ -31,7 +32,7 @@ class Module2ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
+    //MARK: Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         DispatchQueue.main.async {
@@ -44,15 +45,15 @@ class Module2ViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
     }
     
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
     
-    
+    //MARK: Actions
     @IBAction func tapGesture(_ sender: Any) {
         self.percentageTextField.resignFirstResponder()
     }
+    
     @IBAction func sliderAction(_ sender: Any) {
         DispatchQueue.main.async {
             self.freq = self.hzSlider.value
@@ -60,9 +61,11 @@ class Module2ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func didCancelkeyboard(_ sender: Any) {
+        self.percentageTextField.resignFirstResponder()
+    }
     
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
@@ -79,19 +82,14 @@ class Module2ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
     // MARK: Helper MISC functions
     private func kHzString(hz:Float) -> String {
         return String(format: "%.2f kHz", hz)
     }
     
     // MARK: Text Field
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.percentageTextField.resignFirstResponder()
         return true
-    }
-    @IBAction func didCancelkeyboard(_ sender: Any) {
-        self.percentageTextField.resignFirstResponder()
     }
 }

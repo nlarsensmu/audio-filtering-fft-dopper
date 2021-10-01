@@ -36,35 +36,36 @@ class Module1ViewController: UIViewController {
     lazy var graph:MetalGraph? = {
         return MetalGraph(mainView: self.view)
     }()
+    
+    //MARK: Properties
     var currentIndex = 0
     var noticedNoise:Bool = false
+    var timer:Timer? = nil
     
+    //MARK: Functions
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        
-        
         graph?.addGraph(withName: "fft",
                         shouldNormalize: true,
                         numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE/2)
-
-        
-        
         graph?.addGraph(withName: "time",
                         shouldNormalize: false,
                         numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
-        
-        
         audio.startMicrophoneProcessing(withFps: 20)
-        //audio.startMicrophoneProcessing(withFps: AudioConstants.AUDIO_PROCESSING_HERTZ)
-
         audio.play()
         
-        Timer.scheduledTimer(timeInterval: 0.05, target: self,
+        self.timer = Timer.scheduledTimer(timeInterval: 0.05, target: self,
             selector: #selector(self.updateGraph),
             userInfo: nil,
             repeats: true)
     }
-    
+    //Need to clean up the listening timer.
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.audio.endTimer()
+        self.timer?.invalidate()
+    }
     @objc
     func updateGraph(){
         //typical update graph functions for debugging
@@ -76,13 +77,9 @@ class Module1ViewController: UIViewController {
             data: self.audio.timeData,
             forKey: "time"
         )
-        
-        //Update the labelsry
-        
+        //Update the labels
         let frequencies = audio.getTopFrequencies(windowSize: AudioConstants.WINDOW_SIZE,withInterp: true)
-        
         // If the sound was above the threshold lock it in.
-        
         if frequencies.2 || !noticedNoise {
             DispatchQueue.main.async {
                 if frequencies.2 {
@@ -93,7 +90,6 @@ class Module1ViewController: UIViewController {
                 self.hz2.text = String(format: "%f", frequencies.1)
             }
         }
-        
         if frequencies.2 {
             noticedNoise = true
         }
@@ -106,15 +102,4 @@ class Module1ViewController: UIViewController {
             self.hz2.backgroundColor = UIColor.lightGray
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

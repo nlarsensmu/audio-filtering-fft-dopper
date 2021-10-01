@@ -1,6 +1,17 @@
 # Audio Filtering FFT Dopper
 This is the project for Lab 2 of Moble Sensing and Learning. The goal of this lab is to demonstrate skills with using the FFT and sound processing.
 
+## Demo Video description
+
+### Module1 Demo 1
+We wrote some test code to play a 100 ms sound followed by a 201 ms sound, and you can see our app not pick up the 100 ms sound
+
+### Module1 Demo 2
+We added a method to the Novocaine to play a sum of two sine waves, the code is in the video. You can see our app successfully pick up both sounds.
+
+### Module2 Demo
+In this video we open up the app and go to module 2. We move our hand back and forth in front of the phone.
+
 ## Module 1
 ### getTopFrequencies 
 This is the only public function, exposed to the controller.  It will return (Float, Float, Bool) where the first 2 Floats are the two largest peaks and the Bool is whether or not either surpasses the threshold.  This will then call windowedMaxFor(windowSize) which will return the list of ALL peaks.  getTopTwoIndices(indices) will take those peaks and return the top 2.  If the parameter withInterp is true we then call interpolatePoints(indices) which will interpolate these points based one quadartic interpolation. Also the math is done to return a fequency based on the index in the fft.

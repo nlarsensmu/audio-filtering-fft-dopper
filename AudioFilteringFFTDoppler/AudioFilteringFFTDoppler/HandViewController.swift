@@ -9,8 +9,8 @@ import UIKit
 
 class HandViewController: UIViewController {
     
+    //MARK: Properties
     var debugging:Bool = false
-    
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 2048*2
         static let MIN_FREQ:Float = 10.0
@@ -22,14 +22,10 @@ class HandViewController: UIViewController {
         
         static let displacementFromCenter = 5
     }
-    
     let fftWindow = 1000
     lazy var graph:MetalGraph? = {
         return MetalGraph(mainView: self.view)
     }()
-    
-    
-    @IBOutlet weak var handLabel: UILabel!
     var handText:String = "" {
         didSet {
             DispatchQueue.main.async {
@@ -37,11 +33,6 @@ class HandViewController: UIViewController {
             }
         }
     }
-    @IBOutlet weak var leftLabel: UILabel!
-    @IBOutlet weak var rightLabel: UILabel!
-    @IBOutlet weak var leftBaselineLabel: UILabel!
-    @IBOutlet weak var rightBaseLineLabel: UILabel!
-    
     var freq:Float?
     var percentage:Float?
     var audioModel:Module2AudioModel?
@@ -49,7 +40,15 @@ class HandViewController: UIViewController {
     var showSoundGraph:Bool = false
     var showZoomedGraph:Bool = false
     var showFFTGraph:Bool = false
+    
+    //MARK: Outlests
+    @IBOutlet weak var handLabel: UILabel!
+    @IBOutlet weak var leftLabel: UILabel!
+    @IBOutlet weak var rightLabel: UILabel!
+    @IBOutlet weak var leftBaselineLabel: UILabel!
+    @IBOutlet weak var rightBaseLineLabel: UILabel!
 
+    //MARK: Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,10 +97,14 @@ class HandViewController: UIViewController {
                 userInfo: nil,
                 repeats: true)
         }
-        
-        // Do any additional setup after loading the view.
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        if let model = audioModel {
+            model.stopProcessingSinewaveForPlayback()
+            
+        }
+    }
     
     func hideDebugging() {
         leftLabel.isHidden = true
@@ -170,7 +173,6 @@ class HandViewController: UIViewController {
 
     
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
@@ -180,12 +182,4 @@ class HandViewController: UIViewController {
             model.pause()
         }
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        if let model = audioModel {
-            model.stopProcessingSinewaveForPlayback()
-            
-        }
-    }
-    
-
 }

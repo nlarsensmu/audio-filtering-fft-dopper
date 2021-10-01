@@ -19,7 +19,7 @@ class AudioModel {
     var timeData:[Float] // This is different, before it was calculated everytime
     var fftData:[Float]
     var setStuff:Bool = false
-    
+    var timer:Timer? = nil
     //==========================================
     // MARK: Private Properties
     private(set) var BUFFER_SIZE:Int
@@ -59,7 +59,7 @@ class AudioModel {
             // repeat this fps times per second using the timer class
             //   every time this is called, we update the arrays "timeData" and "fftData"
             /* New function that runs on a time interval*/
-            Timer.scheduledTimer(timeInterval: 1.0/withFps, target: self,
+            self.timer = Timer.scheduledTimer(timeInterval: 1.0/withFps, target: self,
                                  selector: #selector(self.runEveryInterval),
                                  userInfo: nil,
                                  repeats: true)
@@ -78,13 +78,15 @@ class AudioModel {
             manager.pause()
         }
     }
-    
+    func endTimer(){
+        self.timer?.invalidate()
+    }
     // MARK: Callback Methods
     //==========================================
     @objc
     private func runEveryInterval(){
         
-        if inputBuffer != nil { /* If it is not nill, some float data has been added to the array */
+         if inputBuffer != nil { /* If it is not nill, some float data has been added to the array */
             // copy time data to swift array
             self.inputBuffer!.fetchFreshData(&timeData,
                                              withNumSamples: Int64(BUFFER_SIZE))
