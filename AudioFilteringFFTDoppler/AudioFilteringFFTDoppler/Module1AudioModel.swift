@@ -73,7 +73,7 @@ class Module1AudioModel: AudioModel {
                 repeatCount += 1
             }
             //We have left the platue need to add the median index
-            else if repeatCount >= 2 {
+            else if repeatCount >= windowSize {
                 maxIndicies.append(maxIndex)
                 repeatCount = 0
             }

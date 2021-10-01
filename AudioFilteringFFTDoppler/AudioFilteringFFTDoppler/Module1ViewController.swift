@@ -27,9 +27,9 @@ class Module1ViewController: UIViewController {
     //because 8192 is within this window we will use it without interpolating points.
     //MARK: Setup
     struct AudioConstants{
-    static let AUDIO_BUFFER_SIZE = 8192*2
+    static let AUDIO_BUFFER_SIZE = 4096*2
         static let AUDIO_PROCESSING_HERTZ = 100.0
-        static let WINDOW_SIZE = 11
+        static let WINDOW_SIZE = 100
         static let THRESHOLD:Float = 12
     }
     let audio = Module1AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE, threshold: AudioConstants.THRESHOLD)
