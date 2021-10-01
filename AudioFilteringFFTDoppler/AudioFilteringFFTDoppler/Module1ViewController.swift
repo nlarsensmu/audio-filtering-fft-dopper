@@ -39,7 +39,7 @@ class Module1ViewController: UIViewController {
         static let WINDOW_SIZE = 11
         static let THRESHOLD:Float = 10
     }
-    let audio = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
+    let audio = Module1AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
     lazy var graph:MetalGraph? = {
         return MetalGraph(mainView: self.view)
     }()
@@ -86,29 +86,13 @@ class Module1ViewController: UIViewController {
         
         //Update the labelsry
         
-        let indicies = audio.windowedMaxFor(nums: audio.fftData, windowSize: AudioConstants.WINDOW_SIZE)
-        let peaks = audio.getTopIndices(indices: indicies, nums: audio.fftData)
-        let betterPeaks:[Float] = audio.interpolateIndices(indides: peaks)
-        var peak1:Float = Float(peaks[0])
-        var peak2:Float = Float(peaks[1])
-        if tempSwitch.isOn {
-            peak1 = betterPeaks[0]
-            peak2 = betterPeaks[1]
-        }
-        let sampleingRate = Float(self.audio.samplingFrequency())
-        if self.audio.fftData[peaks[0]] > AudioConstants.THRESHOLD {
-            self.noticedNoise = true
-                self.hz1.text =
-                    String(format:"%.2f", Float(peak1) * (sampleingRate/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
-                self.hz2.text = String(format:"%.2f", Float(peak2) * (sampleingRate/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
-            }
+        let frequencies = audio.getTopFrequencies(windowSize: AudioConstants.WINDOW_SIZE,withInterp: true)
         
-        else if self.noticedNoise == false {
-                self.hz1.text =
-                    String(format:"%.2f", Float(peak1) * (sampleingRate/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
-                self.hz2.text = String(format:"%.2f", Float(peak2) * (sampleingRate/Float(AudioConstants.AUDIO_BUFFER_SIZE)))
-            }
+        DispatchQueue.main.async {
+            self.hz1.text = String(format: "%f", frequencies.0)
+            self.hz2.text = String(format: "%f", frequencies.1)
         }
+    }
     
 
     /*

@@ -19,6 +19,7 @@
 		B7FFC60626FEA5ED00606636 /* AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FFC60526FEA5ED00606636 /* AudioModel.swift */; };
 		FD3282242703F02600E94ECC /* Module2AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3282232703F02600E94ECC /* Module2AudioModel.swift */; };
 		FDA357F426FECAFC002F95CA /* HandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA357F326FECAFC002F95CA /* HandViewController.swift */; };
+		FDA7FF0A2706BA42002B6B2A /* Module1AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA7FF092706BA42002B6B2A /* Module1AudioModel.swift */; };
 		FDFC146E26FBF7E20039CE1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */; };
 		FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */; };
 		FDFC147226FBF7E20039CE1C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFC147126FBF7E20039CE1C /* ViewController.swift */; };
@@ -69,6 +70,7 @@
 		FD20817026FE946A0067C1F4 /* AudioFilteringFFTDoppler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioFilteringFFTDoppler-Bridging-Header.h"; sourceTree = "<group>"; };
 		FD3282232703F02600E94ECC /* Module2AudioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module2AudioModel.swift; sourceTree = "<group>"; };
 		FDA357F326FECAFC002F95CA /* HandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandViewController.swift; sourceTree = "<group>"; };
+		FDA7FF092706BA42002B6B2A /* Module1AudioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module1AudioModel.swift; sourceTree = "<group>"; };
 		FDFC146A26FBF7E20039CE1C /* AudioFilteringFFTDoppler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFilteringFFTDoppler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFC146D26FBF7E20039CE1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FDFC146F26FBF7E20039CE1C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				FDFC149D26FC05570039CE1C /* Module1ViewController.swift */,
 				FDFC149F26FC05810039CE1C /* Module2ViewController.swift */,
 				FDA357F326FECAFC002F95CA /* HandViewController.swift */,
+				FDA7FF092706BA42002B6B2A /* Module1AudioModel.swift */,
 			);
 			path = AudioFilteringFFTDoppler;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				B72B575426FEA97300A5B3EE /* AudioFileReader.m in Sources */,
 				FDFC147026FBF7E20039CE1C /* SceneDelegate.swift in Sources */,
 				B7DD52BF26FEAD6A005521F6 /* Shaders.metal in Sources */,
+				FDA7FF0A2706BA42002B6B2A /* Module1AudioModel.swift in Sources */,
 				B72B575926FEA97300A5B3EE /* FFTHelper.m in Sources */,
 				FD3282242703F02600E94ECC /* Module2AudioModel.swift in Sources */,
 				B72B575826FEA97300A5B3EE /* BufferedOverlapQueue.m in Sources */,
