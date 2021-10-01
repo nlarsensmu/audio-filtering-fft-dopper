@@ -4,13 +4,14 @@ This is the project for Lab 2 of Moble Sensing and Learning. The goal of this la
 ## Demo Video description
 
 ### Module1 Demo 1
-We wrote some test code to play a 100 ms sound followed by a 201 ms sound, and you can see our app not pick up the 100 ms sound
+We wrote some test code to play a 100 ms sound followed by a 201 ms sound, and you can see our app does not pick up the 100 ms sound. So the result our app should pick up the frequency on the lower slider but not the frequency on the upper slider (it does not last 200 ms).
 
 ### Module1 Demo 2
 We added a method to the Novocaine to play a sum of two sine waves, the code is in the video. You can see our app successfully pick up both sounds.
 
 ### Module2 Demo
-In this video we open up the app and go to module 2. We move our hand back and forth in front of the phone.
+In this video we open up the app and go to module 2. We move our hand back and forth in front of the phone. 
+Disclaimer: There is a faint sound being played in the video, I do not know why that is when we run it on the phone nothing audiable is played.
 
 ## Module 1
 ### getTopFrequencies 
